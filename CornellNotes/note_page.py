@@ -1,9 +1,15 @@
 from ui_note_page import Ui_CornellNotes
+from PyQt5.QtWidgets import QMainWindow, QApplication, QFileDialog, QTextEdit, QAction, QFontDialog, QColorDialog
+import sys
 
-class NotePage(Ui_CornellNotes):
+class NotePage(QMainWindow, Ui_CornellNotes):
     def __init__(self):
         super().__init__()
         self.setupUi(self)
+        self.connect()
+        self.saved = False
+
+    def connect(self):
         # File Menu初始化
         self.actionNewProgram.triggered.connect(self.new_program)
         self.actionNewNote.triggered.connect(self.new_note)
@@ -29,16 +35,33 @@ class NotePage(Ui_CornellNotes):
         pass
 
     def new_note(self):
-        pass
+        self.MainNotes.clear()
+        self.keyWords.clear()
+        self.conclusion.clear()
 
     def open(self):
-        pass
+        filename,_ = QFileDialog.getOpenFileName(self, "Open File", "notes", "Note Files (*.note)")
+        if filename:
+            with open(filename, 'r') as file:
+                content = file.read().split('###\n', 2)
+                if len(content) == 3:
+                    keywords, mainNotes, conclusion = content
+                    self.keyWords.setPlainText(keywords)
+                    self.MainNotes.setPlainText(mainNotes)
+                    self.conclusion.setPlainText(conclusion)
 
     def save(self):
         pass
 
     def save_as(self):
-        pass
+        filename,_ = QFileDialog.getSaveFileName(self, "Save File", "notes", "Note Files (*.note)")
+        if filename:
+            with open(filename, 'w') as file:
+                textKeywords = self.keyWords.toPlainText()
+                textMainNotes = self.MainNotes.toPlainText()
+                textConclusion = self.conclusion.toPlainText()
+                file.write(textKeywords + '###\n' + textMainNotes + '###\n' + textConclusion)
+            self.saved = True
 
     def bold(self):
         pass
@@ -71,10 +94,18 @@ class NotePage(Ui_CornellNotes):
         pass
 
     def font_colour(self):
-        pass
+        colour = QColorDialog.getColor(self.MainNotes.textColor(), self)
+        if colour.isValid():
+            self.MainNotes.setTextColor(colour)
 
     def font_size(self):
         pass
 
     def font_family(self):
         pass
+
+if __name__ == '__main__':
+    app = QApplication(sys.argv)
+    window = NotePage()
+    window.show()
+    sys.exit(app.exec_())
