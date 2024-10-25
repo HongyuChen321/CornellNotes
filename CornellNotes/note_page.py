@@ -1,5 +1,7 @@
 from ui_note_page import Ui_CornellNotes
 from PyQt5.QtWidgets import QMainWindow, QApplication, QFileDialog, QTextEdit, QAction, QFontDialog, QColorDialog
+from PyQt5.QtCore import Qt, QEvent
+from PyQt5.QtGui import QFont, QColor
 import sys
 
 class NotePage(QMainWindow, Ui_CornellNotes):
@@ -8,6 +10,12 @@ class NotePage(QMainWindow, Ui_CornellNotes):
         self.setupUi(self)
         self.connect()
         self.saved = False
+        self.current_text_edit = None
+
+        # 连接聚焦事件
+        self.MainNotes.installEventFilter(self)
+        self.keyWords.installEventFilter(self)
+        self.conclusion.installEventFilter(self)
 
     def connect(self):
         # File Menu初始化
@@ -63,8 +71,19 @@ class NotePage(QMainWindow, Ui_CornellNotes):
                 file.write(textKeywords + '###\n' + textMainNotes + '###\n' + textConclusion)
             self.saved = True
 
+    def eventFilter(self, obj, event):
+        if event.type() == QEvent.FocusIn:
+            if obj in [self.MainNotes, self.keyWords, self.conclusion]:
+                self.current_text_edit = obj
+        return super().eventFilter(obj, event)
+
     def bold(self):
-        pass
+        if self.current_text_edit:
+            cursor = self.current_text_edit.textCursor()
+            if cursor.hasSelection():
+                fmt = cursor.charFormat()
+                fmt.setFontWeight(QFont.Bold if fmt.fontWeight() != QFont.Bold else QFont.Normal)
+                cursor.setCharFormat(fmt)
 
     def italic(self):
         pass
@@ -76,6 +95,7 @@ class NotePage(QMainWindow, Ui_CornellNotes):
         pass
 
     def right(self):
+        self.MainNotes.setAlignment(Qt.AlignRight)
         pass
 
     def center(self):
@@ -94,9 +114,14 @@ class NotePage(QMainWindow, Ui_CornellNotes):
         pass
 
     def font_colour(self):
-        colour = QColorDialog.getColor(self.MainNotes.textColor(), self)
-        if colour.isValid():
-            self.MainNotes.setTextColor(colour)
+        if self.current_text_edit:
+            colour = QColorDialog.getColor(self.current_text_edit.textColor(), self)
+            if colour.isValid():
+                cursor = self.current_text_edit.textCursor()
+                if cursor.hasSelection():
+                    fmt = cursor.charFormat()
+                    fmt.setForeground(colour)
+                    cursor.setCharFormat(fmt)
 
     def font_size(self):
         pass
