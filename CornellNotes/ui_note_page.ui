@@ -56,7 +56,7 @@
    <widget class="QPushButton" name="Bold">
     <property name="geometry">
      <rect>
-      <x>130</x>
+      <x>50</x>
       <y>0</y>
       <width>31</width>
       <height>31</height>
@@ -73,7 +73,7 @@
    <widget class="QPushButton" name="Italic">
     <property name="geometry">
      <rect>
-      <x>160</x>
+      <x>80</x>
       <y>0</y>
       <width>31</width>
       <height>31</height>
@@ -90,7 +90,7 @@
    <widget class="QPushButton" name="Underline">
     <property name="geometry">
      <rect>
-      <x>190</x>
+      <x>110</x>
       <y>0</y>
       <width>31</width>
       <height>31</height>
@@ -107,7 +107,7 @@
    <widget class="QPushButton" name="Left">
     <property name="geometry">
      <rect>
-      <x>260</x>
+      <x>180</x>
       <y>0</y>
       <width>31</width>
       <height>31</height>
@@ -124,7 +124,7 @@
    <widget class="QPushButton" name="Right">
     <property name="geometry">
      <rect>
-      <x>320</x>
+      <x>240</x>
       <y>0</y>
       <width>31</width>
       <height>31</height>
@@ -141,7 +141,7 @@
    <widget class="QPushButton" name="Center">
     <property name="geometry">
      <rect>
-      <x>290</x>
+      <x>210</x>
       <y>0</y>
       <width>31</width>
       <height>31</height>
@@ -158,7 +158,7 @@
    <widget class="QPushButton" name="LeftAndRight">
     <property name="geometry">
      <rect>
-      <x>350</x>
+      <x>270</x>
       <y>0</y>
       <width>31</width>
       <height>31</height>
@@ -175,7 +175,7 @@
    <widget class="QPushButton" name="Superscript">
     <property name="geometry">
      <rect>
-      <x>390</x>
+      <x>310</x>
       <y>0</y>
       <width>31</width>
       <height>31</height>
@@ -192,7 +192,7 @@
    <widget class="QPushButton" name="Subscript">
     <property name="geometry">
      <rect>
-      <x>420</x>
+      <x>340</x>
       <y>0</y>
       <width>31</width>
       <height>31</height>
@@ -206,20 +206,10 @@
       <normaloff>icon/zitixiabiao.svg</normaloff>icon/zitixiabiao.svg</iconset>
     </property>
    </widget>
-   <widget class="QFontComboBox" name="fontComboBox">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>0</y>
-      <width>61</width>
-      <height>31</height>
-     </rect>
-    </property>
-   </widget>
    <widget class="Line" name="line">
     <property name="geometry">
      <rect>
-      <x>120</x>
+      <x>40</x>
       <y>0</y>
       <width>16</width>
       <height>31</height>
@@ -232,7 +222,7 @@
    <widget class="Line" name="line_2">
     <property name="geometry">
      <rect>
-      <x>250</x>
+      <x>170</x>
       <y>0</y>
       <width>16</width>
       <height>31</height>
@@ -245,7 +235,7 @@
    <widget class="Line" name="line_3">
     <property name="geometry">
      <rect>
-      <x>380</x>
+      <x>300</x>
       <y>0</y>
       <width>16</width>
       <height>31</height>
@@ -258,7 +248,7 @@
    <widget class="Line" name="line_4">
     <property name="geometry">
      <rect>
-      <x>450</x>
+      <x>370</x>
       <y>0</y>
       <width>16</width>
       <height>31</height>
@@ -271,7 +261,7 @@
    <widget class="QPushButton" name="InsertPicture">
     <property name="geometry">
      <rect>
-      <x>460</x>
+      <x>380</x>
       <y>0</y>
       <width>31</width>
       <height>31</height>
@@ -288,7 +278,7 @@
    <widget class="QPushButton" name="FontColour">
     <property name="geometry">
      <rect>
-      <x>220</x>
+      <x>140</x>
       <y>0</y>
       <width>31</width>
       <height>31</height>
@@ -300,16 +290,6 @@
     <property name="icon">
      <iconset>
       <normaloff>icon/wenbenyanse.svg</normaloff>icon/wenbenyanse.svg</iconset>
-    </property>
-   </widget>
-   <widget class="QSpinBox" name="spinBox">
-    <property name="geometry">
-     <rect>
-      <x>70</x>
-      <y>0</y>
-      <width>51</width>
-      <height>31</height>
-     </rect>
     </property>
    </widget>
    <widget class="QTextEdit" name="keyWords">
@@ -342,6 +322,23 @@
      </rect>
     </property>
    </widget>
+   <widget class="QPushButton" name="fontSet">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>0</y>
+      <width>31</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="icon">
+     <iconset>
+      <normaloff>icon/字体设置.svg</normaloff>icon/字体设置.svg</iconset>
+    </property>
+   </widget>
    <zorder>conclusion</zorder>
    <zorder>MainNotes</zorder>
    <zorder>keyWords</zorder>
@@ -357,14 +354,13 @@
    <zorder>LeftAndRight</zorder>
    <zorder>Superscript</zorder>
    <zorder>Subscript</zorder>
-   <zorder>fontComboBox</zorder>
    <zorder>line</zorder>
    <zorder>line_2</zorder>
    <zorder>line_3</zorder>
    <zorder>line_4</zorder>
    <zorder>InsertPicture</zorder>
    <zorder>FontColour</zorder>
-   <zorder>spinBox</zorder>
+   <zorder>fontSet</zorder>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">

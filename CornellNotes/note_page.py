@@ -33,6 +33,7 @@ class NotePage(QMainWindow, Ui_CornellNotes):
         self.actionSave.triggered.connect(self.save)
         self.actionSaveAs.triggered.connect(self.save_as)
         # 功能初始化
+        self.fontSet.clicked.connect(self.font_set)
         self.Bold.clicked.connect(self.bold)
         self.Italic.clicked.connect(self.italic)
         self.Underline.clicked.connect(self.underline)
@@ -44,8 +45,7 @@ class NotePage(QMainWindow, Ui_CornellNotes):
         self.Subscript.clicked.connect(self.subscript)
         self.InsertPicture.clicked.connect(self.insert_picture)
         self.FontColour.clicked.connect(self.font_colour)
-        self.spinBox.valueChanged.connect(self.font_size)
-        self.fontComboBox.currentFontChanged.connect(self.font_family)
+
 
     def set_default_font_size(self, size):
         font = self.MainNotes.font()
@@ -156,6 +156,16 @@ class NotePage(QMainWindow, Ui_CornellNotes):
                 fmt.setFontUnderline(not fmt.fontUnderline())
                 cursor.setCharFormat(fmt)
 
+    def font_colour(self):
+        if self.current_text_edit:
+            colour = QColorDialog.getColor(self.current_text_edit.textColor(), self)
+            if colour.isValid():
+                cursor = self.current_text_edit.textCursor()
+                if cursor.hasSelection():
+                    fmt = cursor.charFormat()
+                    fmt.setForeground(colour)
+                    cursor.setCharFormat(fmt)
+
     def left(self):
         pass
 
@@ -212,30 +222,8 @@ class NotePage(QMainWindow, Ui_CornellNotes):
         cursor.mergeCharFormat(format)
         self.MainNotes.mergeCurrentCharFormat(format)
 
-    def font_colour(self):
-        colour = QColorDialog.getColor(self.MainNotes.textColor(), self)
-        if colour.isValid():
-            self.MainNotes.setTextColor(colour)
-
-    def font_colour(self):
-        if self.current_text_edit:
-            colour = QColorDialog.getColor(self.current_text_edit.textColor(), self)
-            if colour.isValid():
-                cursor = self.current_text_edit.textCursor()
-                if cursor.hasSelection():
-                    fmt = cursor.charFormat()
-                    fmt.setForeground(colour)
-                    cursor.setCharFormat(fmt)
-
-    def font_size(self):
-        font, ok = QFontDialog.getFont()
-        if ok:
-            self.MainNotes.setFont(font)
-
-    def font_family(self):
-        font, ok = QFontDialog.getFont()
-        if ok:
-            self.MainNotes.setFont(font)
+    def font_set(self):
+        pass
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
