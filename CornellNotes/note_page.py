@@ -132,34 +132,57 @@ class NotePage(QMainWindow, Ui_CornellNotes):
                 self.current_text_edit = obj
         return super().eventFilter(obj, event)
 
-
     def bold(self):
         if self.current_text_edit:
             cursor = self.current_text_edit.textCursor()
             if cursor.hasSelection():
-                fmt = cursor.charFormat()
-                weight = QFont.Bold if fmt.fontWeight() != QFont.Bold else QFont.Normal
-                fmt.setFontWeight(weight)
-                cursor.mergeCharFormat(fmt)
-                self.current_text_edit.mergeCurrentCharFormat(fmt)
+                start = cursor.selectionStart()
+                end = cursor.selectionEnd()
+                cursor.setPosition(start)
+
+                while cursor.position() < end:
+                    cursor.movePosition(QTextCursor.NextCharacter, QTextCursor.KeepAnchor)
+                    char_format = cursor.charFormat()
+                    weight = QFont.Bold if char_format.fontWeight() != QFont.Bold else QFont.Normal
+                    char_format.setFontWeight(weight)
+                    cursor.mergeCharFormat(char_format)
+                    cursor.clearSelection()
+
+                cursor.setPosition(start, QTextCursor.MoveAnchor)  # Reset cursor position
 
     def italic(self):
         if self.current_text_edit:
             cursor = self.current_text_edit.textCursor()
             if cursor.hasSelection():
-                fmt = cursor.charFormat()
-                fmt.setFontItalic(not fmt.fontItalic())
-                cursor.mergeCharFormat(fmt)
-                self.current_text_edit.mergeCurrentCharFormat(fmt)
+                start = cursor.selectionStart()
+                end = cursor.selectionEnd()
+                cursor.setPosition(start)
+
+                while cursor.position() < end:
+                    cursor.movePosition(QTextCursor.NextCharacter, QTextCursor.KeepAnchor)
+                    char_format = cursor.charFormat()
+                    char_format.setFontItalic(not char_format.fontItalic())
+                    cursor.mergeCharFormat(char_format)
+                    cursor.clearSelection()
+
+                cursor.setPosition(start, QTextCursor.MoveAnchor)  # Reset cursor position
 
     def underline(self):
         if self.current_text_edit:
             cursor = self.current_text_edit.textCursor()
             if cursor.hasSelection():
-                fmt = cursor.charFormat()
-                fmt.setFontUnderline(not fmt.fontUnderline())
-                cursor.mergeCharFormat(fmt)
-                self.current_text_edit.mergeCurrentCharFormat(fmt)
+                start = cursor.selectionStart()
+                end = cursor.selectionEnd()
+                cursor.setPosition(start)
+
+                while cursor.position() < end:
+                    cursor.movePosition(QTextCursor.NextCharacter, QTextCursor.KeepAnchor)
+                    char_format = cursor.charFormat()
+                    char_format.setFontUnderline(not char_format.fontUnderline())
+                    cursor.mergeCharFormat(char_format)
+                    cursor.clearSelection()
+
+                cursor.setPosition(start, QTextCursor.MoveAnchor)  # Reset cursor position
 
     def font_colour(self):
         if self.current_text_edit:
@@ -167,10 +190,18 @@ class NotePage(QMainWindow, Ui_CornellNotes):
             if colour.isValid():
                 cursor = self.current_text_edit.textCursor()
                 if cursor.hasSelection():
-                    fmt = cursor.charFormat()
-                    fmt.setForeground(colour)
-                    cursor.mergeCharFormat(fmt)
-                    self.current_text_edit.mergeCurrentCharFormat(fmt)
+                    start = cursor.selectionStart()
+                    end = cursor.selectionEnd()
+                    cursor.setPosition(start)
+
+                    while cursor.position() < end:
+                        cursor.movePosition(QTextCursor.NextCharacter, QTextCursor.KeepAnchor)
+                        char_format = cursor.charFormat()
+                        char_format.setForeground(colour)
+                        cursor.mergeCharFormat(char_format)
+                        cursor.clearSelection()
+
+                    cursor.setPosition(start, QTextCursor.MoveAnchor)  # Reset cursor position
 
     def left(self):
         pass
