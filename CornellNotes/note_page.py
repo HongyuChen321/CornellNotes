@@ -132,13 +132,16 @@ class NotePage(QMainWindow, Ui_CornellNotes):
                 self.current_text_edit = obj
         return super().eventFilter(obj, event)
 
+
     def bold(self):
         if self.current_text_edit:
             cursor = self.current_text_edit.textCursor()
             if cursor.hasSelection():
                 fmt = cursor.charFormat()
-                fmt.setFontWeight(QFont.Bold if fmt.fontWeight() != QFont.Bold else QFont.Normal)
-                cursor.setCharFormat(fmt)
+                weight = QFont.Bold if fmt.fontWeight() != QFont.Bold else QFont.Normal
+                fmt.setFontWeight(weight)
+                cursor.mergeCharFormat(fmt)
+                self.current_text_edit.mergeCurrentCharFormat(fmt)
 
     def italic(self):
         if self.current_text_edit:
@@ -146,7 +149,8 @@ class NotePage(QMainWindow, Ui_CornellNotes):
             if cursor.hasSelection():
                 fmt = cursor.charFormat()
                 fmt.setFontItalic(not fmt.fontItalic())
-                cursor.setCharFormat(fmt)
+                cursor.mergeCharFormat(fmt)
+                self.current_text_edit.mergeCurrentCharFormat(fmt)
 
     def underline(self):
         if self.current_text_edit:
@@ -154,7 +158,8 @@ class NotePage(QMainWindow, Ui_CornellNotes):
             if cursor.hasSelection():
                 fmt = cursor.charFormat()
                 fmt.setFontUnderline(not fmt.fontUnderline())
-                cursor.setCharFormat(fmt)
+                cursor.mergeCharFormat(fmt)
+                self.current_text_edit.mergeCurrentCharFormat(fmt)
 
     def font_colour(self):
         if self.current_text_edit:
@@ -164,7 +169,8 @@ class NotePage(QMainWindow, Ui_CornellNotes):
                 if cursor.hasSelection():
                     fmt = cursor.charFormat()
                     fmt.setForeground(colour)
-                    cursor.setCharFormat(fmt)
+                    cursor.mergeCharFormat(fmt)
+                    self.current_text_edit.mergeCurrentCharFormat(fmt)
 
     def left(self):
         pass
