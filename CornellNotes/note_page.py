@@ -184,6 +184,65 @@ class NotePage(QMainWindow, Ui_CornellNotes):
 
                 cursor.setPosition(start, QTextCursor.MoveAnchor)  # Reset cursor position
 
+    def mouseDoubleClickEvent(self, event):
+        if self.current_text_edit and self.current_text_edit.underMouse():
+            self.toggle_bold()
+            self.toggle_italic()
+            self.toggle_underline()
+        super().mouseDoubleClickEvent(event)
+
+    def toggle_bold(self):
+        if self.current_text_edit:
+            cursor = self.current_text_edit.textCursor()
+            if cursor.hasSelection():
+                start = cursor.selectionStart()
+                end = cursor.selectionEnd()
+                cursor.setPosition(start)
+
+                while cursor.position() < end:
+                    cursor.movePosition(QTextCursor.NextCharacter, QTextCursor.KeepAnchor)
+                    char_format = cursor.charFormat()
+                    weight = QFont.Bold if char_format.fontWeight() != QFont.Bold else QFont.Normal
+                    char_format.setFontWeight(weight)
+                    cursor.mergeCharFormat(char_format)
+                    cursor.clearSelection()
+
+                cursor.setPosition(start, QTextCursor.MoveAnchor)  # Reset cursor position
+
+    def toggle_italic(self):
+        if self.current_text_edit:
+            cursor = self.current_text_edit.textCursor()
+            if cursor.hasSelection():
+                start = cursor.selectionStart()
+                end = cursor.selectionEnd()
+                cursor.setPosition(start)
+
+                while cursor.position() < end:
+                    cursor.movePosition(QTextCursor.NextCharacter, QTextCursor.KeepAnchor)
+                    char_format = cursor.charFormat()
+                    char_format.setFontItalic(not char_format.fontItalic())
+                    cursor.mergeCharFormat(char_format)
+                    cursor.clearSelection()
+
+                cursor.setPosition(start, QTextCursor.MoveAnchor)  # Reset cursor position
+
+    def toggle_underline(self):
+        if self.current_text_edit:
+            cursor = self.current_text_edit.textCursor()
+            if cursor.hasSelection():
+                start = cursor.selectionStart()
+                end = cursor.selectionEnd()
+                cursor.setPosition(start)
+
+                while cursor.position() < end:
+                    cursor.movePosition(QTextCursor.NextCharacter, QTextCursor.KeepAnchor)
+                    char_format = cursor.charFormat()
+                    char_format.setFontUnderline(not char_format.fontUnderline())
+                    cursor.mergeCharFormat(char_format)
+                    cursor.clearSelection()
+
+                cursor.setPosition(start, QTextCursor.MoveAnchor)  # Reset cursor position
+
     def font_colour(self):
         if self.current_text_edit:
             colour = QColorDialog.getColor(self.current_text_edit.textColor(), self)
@@ -260,7 +319,14 @@ class NotePage(QMainWindow, Ui_CornellNotes):
         self.MainNotes.mergeCurrentCharFormat(format)
 
     def font_set(self):
-        pass
+        if self.current_text_edit:
+            font, ok = QFontDialog.getFont(self.current_text_edit.currentFont(), self.current_text_edit)
+            if ok:
+                cursor = self.current_text_edit.textCursor()
+                if cursor.hasSelection():
+                    fmt = cursor.charFormat()
+                    fmt.setFont(font)
+                    cursor.setCharFormat(fmt)
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
