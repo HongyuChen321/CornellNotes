@@ -263,16 +263,40 @@ class NotePage(QMainWindow, Ui_CornellNotes):
                     cursor.setPosition(start, QTextCursor.MoveAnchor)  # Reset cursor position
 
     def left(self):
-        pass
+        text_edits = [self.keyWords, self.MainNotes, self.conclusion]
+        for text_edit in text_edits:
+            cursor = text_edit.textCursor()
+            if cursor.hasSelection():
+                block_format = cursor.blockFormat()
+                block_format.setAlignment(Qt.AlignLeft)
+                cursor.setBlockFormat(block_format)
 
     def right(self):
-        pass
+        text_edits = [self.keyWords, self.MainNotes, self.conclusion]
+        for text_edit in text_edits:
+            cursor = text_edit.textCursor()
+            if cursor.hasSelection():
+                block_format = cursor.blockFormat()
+                block_format.setAlignment(Qt.AlignRight)
+                cursor.setBlockFormat(block_format)
 
     def center(self):
-        pass
+        text_edits = [self.keyWords, self.MainNotes, self.conclusion]
+        for text_edit in text_edits:
+            cursor = text_edit.textCursor()
+            if cursor.hasSelection():
+                block_format = cursor.blockFormat()
+                block_format.setAlignment(Qt.AlignCenter)
+                cursor.setBlockFormat(block_format)
 
     def left_and_right(self):
-        pass
+        text_edits = [self.keyWords, self.MainNotes, self.conclusion]
+        for text_edit in text_edits:
+            cursor = text_edit.textCursor()
+            if cursor.hasSelection():
+                block_format = cursor.blockFormat()
+                block_format.setAlignment(Qt.AlignJustify)
+                cursor.setBlockFormat(block_format)
 
     def superscript(self):
         # 切换选中文本的上标状态
