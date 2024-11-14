@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>800</width>
-    <height>640</height>
+    <height>655</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -23,6 +23,26 @@
       <height>391</height>
      </rect>
     </property>
+    <property name="styleSheet">
+     <string notr="true">QScrollBar:vertical {
+    background: rgba(0, 0, 0, 50);  /* 半透明背景 */
+    width: 10px;  /* 滚动条宽度 */
+}
+
+QScrollBar::handle:vertical {
+    background: rgba(0, 0, 0, 150);  /* 半透明滑块 */
+    border-radius: 5px;  /* 圆角滑块 */
+}
+
+QScrollBar::add-line:vertical, QScrollBar::sub-line:vertical {
+    border: none;  /* 隐藏箭头按钮 */
+}
+
+QScrollBar::up-arrow:vertical, QScrollBar::down-arrow:vertical {
+    border: none;  /* 隐藏箭头图标 */
+}
+</string>
+    </property>
     <property name="orientation">
      <enum>Qt::Vertical</enum>
     </property>
@@ -36,6 +56,26 @@
       <height>391</height>
      </rect>
     </property>
+    <property name="styleSheet">
+     <string notr="true">QScrollBar:vertical {
+    background: rgba(0, 0, 0, 50);  /* 半透明背景 */
+    width: 10px;  /* 滚动条宽度 */
+}
+
+QScrollBar::handle:vertical {
+    background: rgba(0, 0, 0, 150);  /* 半透明滑块 */
+    border-radius: 5px;  /* 圆角滑块 */
+}
+
+QScrollBar::add-line:vertical, QScrollBar::sub-line:vertical {
+    border: none;  /* 隐藏箭头按钮 */
+}
+
+QScrollBar::up-arrow:vertical, QScrollBar::down-arrow:vertical {
+    border: none;  /* 隐藏箭头图标 */
+}
+</string>
+    </property>
     <property name="orientation">
      <enum>Qt::Vertical</enum>
     </property>
@@ -46,8 +86,28 @@
       <x>770</x>
       <y>470</y>
       <width>20</width>
-      <height>111</height>
+      <height>121</height>
      </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QScrollBar:vertical {
+    background: rgba(0, 0, 0, 50);  /* 半透明背景 */
+    width: 10px;  /* 滚动条宽度 */
+}
+
+QScrollBar::handle:vertical {
+    background: rgba(0, 0, 0, 150);  /* 半透明滑块 */
+    border-radius: 5px;  /* 圆角滑块 */
+}
+
+QScrollBar::add-line:vertical, QScrollBar::sub-line:vertical {
+    border: none;  /* 隐藏箭头按钮 */
+}
+
+QScrollBar::up-arrow:vertical, QScrollBar::down-arrow:vertical {
+    border: none;  /* 隐藏箭头图标 */
+}
+</string>
     </property>
     <property name="orientation">
      <enum>Qt::Vertical</enum>
@@ -61,6 +121,9 @@
       <width>31</width>
       <height>31</height>
      </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true"/>
     </property>
     <property name="text">
      <string/>
@@ -78,6 +141,9 @@
       <width>31</width>
       <height>31</height>
      </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true"/>
     </property>
     <property name="text">
      <string/>
@@ -301,6 +367,13 @@
       <height>411</height>
      </rect>
     </property>
+    <property name="styleSheet">
+     <string notr="true">QTextEdit {
+    background-color: rgba(255, 255, 255, 128);
+    border: 1px solid #cccccc;
+}
+</string>
+    </property>
    </widget>
    <widget class="QTextEdit" name="MainNotes">
     <property name="geometry">
@@ -310,6 +383,13 @@
       <width>621</width>
       <height>411</height>
      </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QTextEdit {
+    background-color: rgba(255, 255, 255, 128);
+    border: 1px solid #cccccc;
+}
+</string>
     </property>
    </widget>
    <widget class="QTextEdit" name="conclusion">
@@ -321,6 +401,13 @@
       <height>141</height>
      </rect>
     </property>
+    <property name="styleSheet">
+     <string notr="true">QTextEdit {
+    background-color: rgba(255, 255, 255, 128);
+    border: 1px solid #cccccc;
+}
+</string>
+    </property>
    </widget>
    <widget class="QPushButton" name="fontSet">
     <property name="geometry">
@@ -331,6 +418,9 @@
       <height>31</height>
      </rect>
     </property>
+    <property name="styleSheet">
+     <string notr="true"/>
+    </property>
     <property name="text">
      <string/>
     </property>
@@ -339,6 +429,29 @@
       <normaloff>icon/字体设置.svg</normaloff>icon/字体设置.svg</iconset>
     </property>
    </widget>
+   <widget class="QLabel" name="label">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>0</y>
+      <width>801</width>
+      <height>611</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="pixmap">
+     <pixmap>resources/picture/caca.png</pixmap>
+    </property>
+    <property name="scaledContents">
+     <bool>true</bool>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+   </widget>
+   <zorder>label</zorder>
    <zorder>conclusion</zorder>
    <zorder>MainNotes</zorder>
    <zorder>keyWords</zorder>

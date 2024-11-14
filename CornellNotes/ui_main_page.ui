@@ -47,6 +47,14 @@
       <pointsize>8</pointsize>
      </font>
     </property>
+    <property name="styleSheet">
+     <string notr="true">QCalendarWidget {
+    background-color: rgba(255, 255, 255, 128);
+    border: 1px solid #cccccc;
+}
+
+</string>
+    </property>
    </widget>
    <widget class="QLabel" name="label">
     <property name="geometry">
@@ -65,6 +73,12 @@
     </property>
     <property name="layoutDirection">
      <enum>Qt::LeftToRight</enum>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QLabel {
+    color: white;
+}
+</string>
     </property>
     <property name="text">
      <string>日历</string>
@@ -85,6 +99,12 @@
       <pointsize>14</pointsize>
      </font>
     </property>
+    <property name="styleSheet">
+     <string notr="true">QLabel {
+    color: white;
+}
+</string>
+    </property>
     <property name="text">
      <string>搜索栏</string>
     </property>
@@ -103,6 +123,12 @@
       <family>宋体</family>
       <pointsize>14</pointsize>
      </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QLabel {
+    color: white;
+}
+</string>
     </property>
     <property name="text">
      <string>待办</string>
@@ -123,6 +149,13 @@
       <pointsize>14</pointsize>
      </font>
     </property>
+    <property name="styleSheet">
+     <string notr="true">QTextEdit {
+    background-color: rgba(255, 255, 255, 128);
+    border: 1px solid #cccccc;
+}
+</string>
+    </property>
    </widget>
    <widget class="QListView" name="noteMenu">
     <property name="geometry">
@@ -138,6 +171,13 @@
       <family>宋体</family>
       <pointsize>12</pointsize>
      </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QListView {
+    background-color: rgba(255, 255, 255, 128);
+    border: 1px solid #cccccc;
+}
+</string>
     </property>
    </widget>
    <widget class="QTextEdit" name="toDo">
@@ -155,6 +195,13 @@
       <pointsize>12</pointsize>
      </font>
     </property>
+    <property name="styleSheet">
+     <string notr="true">QTextEdit {
+    background-color: rgba(255, 255, 255, 128);
+    border: 1px solid #cccccc;
+}
+</string>
+    </property>
    </widget>
    <widget class="QLabel" name="label_4">
     <property name="geometry">
@@ -171,6 +218,12 @@
       <pointsize>14</pointsize>
      </font>
     </property>
+    <property name="styleSheet">
+     <string notr="true">QLabel {
+    color: white;
+}
+</string>
+    </property>
     <property name="text">
      <string>笔记目录</string>
     </property>
@@ -183,6 +236,13 @@
       <width>41</width>
       <height>41</height>
      </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton {
+    background-color: rgba(255, 255, 255, 128);
+    border: 1px solid #cccccc;
+}
+</string>
     </property>
     <property name="text">
      <string/>
@@ -201,6 +261,26 @@
       <height>241</height>
      </rect>
     </property>
+    <property name="styleSheet">
+     <string notr="true">QScrollBar:vertical {
+    background: rgba(0, 0, 0, 50);  /* 半透明背景 */
+    width: 10px;  /* 滚动条宽度 */
+}
+
+QScrollBar::handle:vertical {
+    background: rgba(0, 0, 0, 150);  /* 半透明滑块 */
+    border-radius: 5px;  /* 圆角滑块 */
+}
+
+QScrollBar::add-line:vertical, QScrollBar::sub-line:vertical {
+    border: none;  /* 隐藏箭头按钮 */
+}
+
+QScrollBar::up-arrow:vertical, QScrollBar::down-arrow:vertical {
+    border: none;  /* 隐藏箭头图标 */
+}
+</string>
+    </property>
     <property name="orientation">
      <enum>Qt::Vertical</enum>
     </property>
@@ -214,10 +294,67 @@
       <height>451</height>
      </rect>
     </property>
+    <property name="styleSheet">
+     <string notr="true">QScrollBar:vertical {
+    background: rgba(0, 0, 0, 50);  /* 半透明背景 */
+    width: 10px;  /* 滚动条宽度 */
+}
+
+QScrollBar::handle:vertical {
+    background: rgba(0, 0, 0, 150);  /* 半透明滑块 */
+    border-radius: 5px;  /* 圆角滑块 */
+}
+
+QScrollBar::add-line:vertical, QScrollBar::sub-line:vertical {
+    border: none;  /* 隐藏箭头按钮 */
+}
+
+QScrollBar::up-arrow:vertical, QScrollBar::down-arrow:vertical {
+    border: none;  /* 隐藏箭头图标 */
+}
+</string>
+    </property>
     <property name="orientation">
      <enum>Qt::Vertical</enum>
     </property>
    </widget>
+   <widget class="QLabel" name="label_5">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>0</y>
+      <width>781</width>
+      <height>601</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true"/>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="pixmap">
+     <pixmap>resources/picture/caca.png</pixmap>
+    </property>
+    <property name="scaledContents">
+     <bool>true</bool>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+   </widget>
+   <zorder>label_5</zorder>
+   <zorder>calendarWidget</zorder>
+   <zorder>label</zorder>
+   <zorder>label_2</zorder>
+   <zorder>label_3</zorder>
+   <zorder>searchBar</zorder>
+   <zorder>noteMenu</zorder>
+   <zorder>toDo</zorder>
+   <zorder>label_4</zorder>
+   <zorder>searchButton</zorder>
+   <zorder>verticalScrollBar</zorder>
+   <zorder>verticalScrollBar_2</zorder>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
   <widget class="QMenuBar" name="menuBar">
@@ -226,7 +363,7 @@
      <x>0</x>
      <y>0</y>
      <width>781</width>
-     <height>26</height>
+     <height>23</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">

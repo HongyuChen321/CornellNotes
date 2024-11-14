@@ -14,23 +14,78 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_CornellNotes(object):
     def setupUi(self, CornellNotes):
         CornellNotes.setObjectName("CornellNotes")
-        CornellNotes.resize(800, 640)
+        CornellNotes.resize(800, 655)
         self.centralwidget = QtWidgets.QWidget(CornellNotes)
         self.centralwidget.setObjectName("centralwidget")
         self.verticalScrollBar = QtWidgets.QScrollBar(self.centralwidget)
         self.verticalScrollBar.setGeometry(QtCore.QRect(770, 50, 20, 391))
+        self.verticalScrollBar.setStyleSheet("QScrollBar:vertical {\n"
+"    background: rgba(0, 0, 0, 50);  /* 半透明背景 */\n"
+"    width: 10px;  /* 滚动条宽度 */\n"
+"}\n"
+"\n"
+"QScrollBar::handle:vertical {\n"
+"    background: rgba(0, 0, 0, 150);  /* 半透明滑块 */\n"
+"    border-radius: 5px;  /* 圆角滑块 */\n"
+"}\n"
+"\n"
+"QScrollBar::add-line:vertical, QScrollBar::sub-line:vertical {\n"
+"    border: none;  /* 隐藏箭头按钮 */\n"
+"}\n"
+"\n"
+"QScrollBar::up-arrow:vertical, QScrollBar::down-arrow:vertical {\n"
+"    border: none;  /* 隐藏箭头图标 */\n"
+"}\n"
+"")
         self.verticalScrollBar.setOrientation(QtCore.Qt.Vertical)
         self.verticalScrollBar.setObjectName("verticalScrollBar")
         self.verticalScrollBar_2 = QtWidgets.QScrollBar(self.centralwidget)
         self.verticalScrollBar_2.setGeometry(QtCore.QRect(140, 50, 20, 391))
+        self.verticalScrollBar_2.setStyleSheet("QScrollBar:vertical {\n"
+"    background: rgba(0, 0, 0, 50);  /* 半透明背景 */\n"
+"    width: 10px;  /* 滚动条宽度 */\n"
+"}\n"
+"\n"
+"QScrollBar::handle:vertical {\n"
+"    background: rgba(0, 0, 0, 150);  /* 半透明滑块 */\n"
+"    border-radius: 5px;  /* 圆角滑块 */\n"
+"}\n"
+"\n"
+"QScrollBar::add-line:vertical, QScrollBar::sub-line:vertical {\n"
+"    border: none;  /* 隐藏箭头按钮 */\n"
+"}\n"
+"\n"
+"QScrollBar::up-arrow:vertical, QScrollBar::down-arrow:vertical {\n"
+"    border: none;  /* 隐藏箭头图标 */\n"
+"}\n"
+"")
         self.verticalScrollBar_2.setOrientation(QtCore.Qt.Vertical)
         self.verticalScrollBar_2.setObjectName("verticalScrollBar_2")
         self.verticalScrollBar_3 = QtWidgets.QScrollBar(self.centralwidget)
-        self.verticalScrollBar_3.setGeometry(QtCore.QRect(770, 470, 20, 111))
+        self.verticalScrollBar_3.setGeometry(QtCore.QRect(770, 470, 20, 121))
+        self.verticalScrollBar_3.setStyleSheet("QScrollBar:vertical {\n"
+"    background: rgba(0, 0, 0, 50);  /* 半透明背景 */\n"
+"    width: 10px;  /* 滚动条宽度 */\n"
+"}\n"
+"\n"
+"QScrollBar::handle:vertical {\n"
+"    background: rgba(0, 0, 0, 150);  /* 半透明滑块 */\n"
+"    border-radius: 5px;  /* 圆角滑块 */\n"
+"}\n"
+"\n"
+"QScrollBar::add-line:vertical, QScrollBar::sub-line:vertical {\n"
+"    border: none;  /* 隐藏箭头按钮 */\n"
+"}\n"
+"\n"
+"QScrollBar::up-arrow:vertical, QScrollBar::down-arrow:vertical {\n"
+"    border: none;  /* 隐藏箭头图标 */\n"
+"}\n"
+"")
         self.verticalScrollBar_3.setOrientation(QtCore.Qt.Vertical)
         self.verticalScrollBar_3.setObjectName("verticalScrollBar_3")
         self.Bold = QtWidgets.QPushButton(self.centralwidget)
         self.Bold.setGeometry(QtCore.QRect(50, 0, 31, 31))
+        self.Bold.setStyleSheet("")
         self.Bold.setText("")
         icon = QtGui.QIcon()
         icon.addPixmap(QtGui.QPixmap("icon/zitijiacu.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
@@ -38,6 +93,7 @@ class Ui_CornellNotes(object):
         self.Bold.setObjectName("Bold")
         self.Italic = QtWidgets.QPushButton(self.centralwidget)
         self.Italic.setGeometry(QtCore.QRect(80, 0, 31, 31))
+        self.Italic.setStyleSheet("")
         self.Italic.setText("")
         icon1 = QtGui.QIcon()
         icon1.addPixmap(QtGui.QPixmap("icon/zitixieti.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
@@ -128,20 +184,44 @@ class Ui_CornellNotes(object):
         self.FontColour.setObjectName("FontColour")
         self.keyWords = QtWidgets.QTextEdit(self.centralwidget)
         self.keyWords.setGeometry(QtCore.QRect(10, 40, 151, 411))
+        self.keyWords.setStyleSheet("QTextEdit {\n"
+"    background-color: rgba(255, 255, 255, 128);\n"
+"    border: 1px solid #cccccc;\n"
+"}\n"
+"")
         self.keyWords.setObjectName("keyWords")
         self.MainNotes = QtWidgets.QTextEdit(self.centralwidget)
         self.MainNotes.setGeometry(QtCore.QRect(170, 40, 621, 411))
+        self.MainNotes.setStyleSheet("QTextEdit {\n"
+"    background-color: rgba(255, 255, 255, 128);\n"
+"    border: 1px solid #cccccc;\n"
+"}\n"
+"")
         self.MainNotes.setObjectName("MainNotes")
         self.conclusion = QtWidgets.QTextEdit(self.centralwidget)
         self.conclusion.setGeometry(QtCore.QRect(10, 460, 781, 141))
+        self.conclusion.setStyleSheet("QTextEdit {\n"
+"    background-color: rgba(255, 255, 255, 128);\n"
+"    border: 1px solid #cccccc;\n"
+"}\n"
+"")
         self.conclusion.setObjectName("conclusion")
         self.fontSet = QtWidgets.QPushButton(self.centralwidget)
         self.fontSet.setGeometry(QtCore.QRect(10, 0, 31, 31))
+        self.fontSet.setStyleSheet("")
         self.fontSet.setText("")
         icon11 = QtGui.QIcon()
         icon11.addPixmap(QtGui.QPixmap("icon/字体设置.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.fontSet.setIcon(icon11)
         self.fontSet.setObjectName("fontSet")
+        self.label = QtWidgets.QLabel(self.centralwidget)
+        self.label.setGeometry(QtCore.QRect(0, 0, 801, 611))
+        self.label.setText("")
+        self.label.setPixmap(QtGui.QPixmap("resources/picture/caca.png"))
+        self.label.setScaledContents(True)
+        self.label.setAlignment(QtCore.Qt.AlignCenter)
+        self.label.setObjectName("label")
+        self.label.raise_()
         self.conclusion.raise_()
         self.MainNotes.raise_()
         self.keyWords.raise_()
@@ -166,7 +246,7 @@ class Ui_CornellNotes(object):
         self.fontSet.raise_()
         CornellNotes.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(CornellNotes)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 800, 23))
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 800, 26))
         self.menubar.setObjectName("menubar")
         self.menu = QtWidgets.QMenu(self.menubar)
         self.menu.setObjectName("menu")
