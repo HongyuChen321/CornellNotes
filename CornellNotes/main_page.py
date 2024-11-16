@@ -82,9 +82,6 @@ class MainPage(QMainWindow, Ui_MainPage):
         msg_box.setText(file_content)
         msg_box.exec_()
 
-        # app = QApplication(sys.argv)
-        # show_files_immediately()
-
         sys.exit(app.exec_())
 
     def new_program(self):

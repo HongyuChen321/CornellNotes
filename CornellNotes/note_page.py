@@ -106,7 +106,7 @@ class NotePage(QMainWindow, Ui_CornellNotes):
             filename, _ = QFileDialog.getOpenFileName(self, "Open File", start_dir, "Note Files (*.note)")
             if filename:
                 try:
-                    with open(filename, 'r') as file:
+                    with open(filename, 'r', encoding = "UTF-8") as file:
                         keywords, mainNotes, conclusion = file.read().split('\n###\n', 2)
                         self.keyWords.setHtml(keywords)  # 使用 setPlainText 来加载纯文本内容
                         self.MainNotes.setHtml(mainNotes)
@@ -131,7 +131,7 @@ class NotePage(QMainWindow, Ui_CornellNotes):
             filename, _ = QFileDialog.getOpenFileName(self, "Open File", start_dir, "Note Files (*.note)")
             if filename:
                 try:
-                    with open(filename, 'r') as file:
+                    with open(filename, 'r', encoding = "UTF-8") as file:
                         keywords, mainNotes, conclusion = file.read().split('\n###\n', 2)
                         self.keyWords.setHtml(keywords)  # 使用 setHtml 来加载 HTML 格式内容
                         self.MainNotes.setHtml(mainNotes)
@@ -145,7 +145,7 @@ class NotePage(QMainWindow, Ui_CornellNotes):
 
     def save(self):
         if self.current_filename:  # 如果已经打开了文件，则直接保存
-            with open(self.current_filename, 'w') as file:
+            with open(self.current_filename, 'w', encoding = "UTF-8") as file:
                 textKeywords = self.keyWords.toHtml()  # 使用HTML保存文本内容，包括格式和颜色
                 textMainNotes = self.MainNotes.toHtml()
                 textConclusion = self.conclusion.toHtml()
@@ -158,7 +158,7 @@ class NotePage(QMainWindow, Ui_CornellNotes):
         start_dir = 'notes'
         filename, _ = QFileDialog.getSaveFileName(self, "Save File", start_dir, "Note Files (*.note)")
         if filename:
-            with open(filename, 'w', encoding='utf-8') as file:
+            with open(filename, 'w', encoding = "UTF-8") as file:
                 textKeywords = self.keyWords.toHtml()  # 使用HTML保存文本内容，包括格式和颜色
                 textMainNotes = self.MainNotes.toHtml()
                 textConclusion = self.conclusion.toHtml()
@@ -224,65 +224,6 @@ class NotePage(QMainWindow, Ui_CornellNotes):
                     cursor.clearSelection()
 
                 cursor.setPosition(start, QTextCursor.MoveAnchor)  # Reset cursor position
-
-    # def mouseDoubleClickEvent(self, event):
-    #     if self.current_text_edit and self.current_text_edit.underMouse():
-    #         self.toggle_bold()
-    #         self.toggle_italic()
-    #         self.toggle_underline()
-    #     super().mouseDoubleClickEvent(event)
-    #
-    # def toggle_bold(self):
-    #     if self.current_text_edit:
-    #         cursor = self.current_text_edit.textCursor()
-    #         if cursor.hasSelection():
-    #             start = cursor.selectionStart()
-    #             end = cursor.selectionEnd()
-    #             cursor.setPosition(start)
-    #
-    #             while cursor.position() < end:
-    #                 cursor.movePosition(QTextCursor.NextCharacter, QTextCursor.KeepAnchor)
-    #                 char_format = cursor.charFormat()
-    #                 weight = QFont.Bold if char_format.fontWeight() != QFont.Bold else QFont.Normal
-    #                 char_format.setFontWeight(weight)
-    #                 cursor.mergeCharFormat(char_format)
-    #                 cursor.clearSelection()
-    #
-    #             cursor.setPosition(start, QTextCursor.MoveAnchor)  # Reset cursor position
-    #
-    # def toggle_italic(self):
-    #     if self.current_text_edit:
-    #         cursor = self.current_text_edit.textCursor()
-    #         if cursor.hasSelection():
-    #             start = cursor.selectionStart()
-    #             end = cursor.selectionEnd()
-    #             cursor.setPosition(start)
-    #
-    #             while cursor.position() < end:
-    #                 cursor.movePosition(QTextCursor.NextCharacter, QTextCursor.KeepAnchor)
-    #                 char_format = cursor.charFormat()
-    #                 char_format.setFontItalic(not char_format.fontItalic())
-    #                 cursor.mergeCharFormat(char_format)
-    #                 cursor.clearSelection()
-    #
-    #             cursor.setPosition(start, QTextCursor.MoveAnchor)  # Reset cursor position
-    #
-    # def toggle_underline(self):
-    #     if self.current_text_edit:
-    #         cursor = self.current_text_edit.textCursor()
-    #         if cursor.hasSelection():
-    #             start = cursor.selectionStart()
-    #             end = cursor.selectionEnd()
-    #             cursor.setPosition(start)
-    #
-    #             while cursor.position() < end:
-    #                 cursor.movePosition(QTextCursor.NextCharacter, QTextCursor.KeepAnchor)
-    #                 char_format = cursor.charFormat()
-    #                 char_format.setFontUnderline(not char_format.fontUnderline())
-    #                 cursor.mergeCharFormat(char_format)
-    #                 cursor.clearSelection()
-    #
-    #             cursor.setPosition(start, QTextCursor.MoveAnchor)  # Reset cursor position
 
     def font_colour(self):
         if self.current_text_edit:
@@ -376,6 +317,7 @@ class NotePage(QMainWindow, Ui_CornellNotes):
                     buffer = BytesIO()
                     image.save(buffer, "PNG")  # 确保指定文件格式为 "PNG"
                     base64_data = base64.b64encode(buffer.getvalue()).decode('utf-8')
+                    print(base64_data)
 
                     html_img_tag = f'<img src="data:image/png;base64,{base64_data}" />'
                     cursor = self.MainNotes.textCursor()
