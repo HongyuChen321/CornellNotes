@@ -1,6 +1,6 @@
 from ui_note_page import Ui_CornellNotes
 from PyQt5.QtWidgets import QMainWindow, QApplication, QFileDialog, QTextEdit, QAction, QFontDialog, QColorDialog, QMessageBox, QInputDialog
-from PyQt5.QtCore import Qt, QEvent
+from PyQt5.QtCore import Qt, QEvent, QBuffer
 from PyQt5.QtGui import QFont, QColor, QTextCharFormat, QTextCursor, QImage
 import sys
 import os
@@ -67,14 +67,6 @@ class NotePage(QMainWindow, Ui_CornellNotes):
         try:
             os.makedirs(self.new_folder_path, exist_ok=True)
             QMessageBox.information(self, "Success", f"Folder '{folder_name}' created successfully.")
-
-            # default_note_path = os.path.join(self.new_folder_path, "default_note.note")
-            # try:
-            #     with open(default_note_path, 'w') as file:
-            #         file.write("This is a default note.")
-            #     QMessageBox.information(self, "Success", f"Default note '{default_note_path}' created successfully.")
-            # except OSError as e:
-            #     QMessageBox.critical(self, "Error", f"Failed to create default note in folder '{folder_name}': {e}")
 
         except OSError as e:
             QMessageBox.critical(self, "Error", f"Failed to create folder '{folder_name}': {e}")
@@ -314,14 +306,14 @@ class NotePage(QMainWindow, Ui_CornellNotes):
                     new_height = int(image.height() * factor)
                     image = image.scaled(new_width, new_height, Qt.KeepAspectRatio, Qt.SmoothTransformation)
 
-                    buffer = BytesIO()
+                    buffer = QBuffer()
+                    buffer.open(QBuffer.ReadWrite)
                     image.save(buffer, "PNG")  # 确保指定文件格式为 "PNG"
-                    base64_data = base64.b64encode(buffer.getvalue()).decode('utf-8')
+                    base64_data = base64.b64encode(buffer.data()).decode('utf-8')
                     print(base64_data)
 
-                    html_img_tag = f'<img src="data:image/png;base64,{base64_data}" />'
+                    html_img_tag = f'<img src="data:image/png;base64,{base64_data}" style="width:500px;height:auto;"/>'
                     cursor = self.MainNotes.textCursor()
-                    cursor.insertHtml(html_img_tag)
                     cursor.insertHtml(html_img_tag)
 
     def apply_text_format(self, format):
