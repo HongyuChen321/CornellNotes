@@ -82,8 +82,6 @@ class MainPage(QMainWindow, Ui_MainPage):
         msg_box.setText(file_content)
         msg_box.exec_()
 
-        sys.exit(app.exec_())
-
     def new_program(self):
         pass
 
