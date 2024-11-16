@@ -1,10 +1,12 @@
 from ui_note_page import Ui_CornellNotes
-from PyQt5.QtWidgets import QMainWindow, QApplication, QFileDialog, QTextEdit, QAction, QFontDialog, QColorDialog
+from PyQt5.QtWidgets import QMainWindow, QApplication, QFileDialog, QTextEdit, QAction, QFontDialog, QColorDialog, QMessageBox, QInputDialog
 from PyQt5.QtCore import Qt, QEvent
 from PyQt5.QtGui import QFont, QColor, QTextCharFormat, QTextCursor, QImage
 import sys
 import os
 from unittest import findTestCases
+import base64
+from io import BytesIO
 
 class NotePage(QMainWindow, Ui_CornellNotes):
     def __init__(self):
@@ -59,69 +61,108 @@ class NotePage(QMainWindow, Ui_CornellNotes):
         if not ok or not folder_name:
             return
 
-        base_dir = os.getcwd()
+        base_dir = "notes"
         self.new_folder_path = os.path.join(base_dir, folder_name)  # 存储新创建的文件夹路径
 
         try:
             os.makedirs(self.new_folder_path, exist_ok=True)
             QMessageBox.information(self, "Success", f"Folder '{folder_name}' created successfully.")
 
-            default_note_path = os.path.join(self.new_folder_path, "default_note.note")
-            try:
-                with open(default_note_path, 'w') as file:
-                    file.write("This is a default note.")
-                QMessageBox.information(self, "Success", f"Default note '{default_note_path}' created successfully.")
-            except OSError as e:
-                QMessageBox.critical(self, "Error", f"Failed to create default note in folder '{folder_name}': {e}")
+            # default_note_path = os.path.join(self.new_folder_path, "default_note.note")
+            # try:
+            #     with open(default_note_path, 'w') as file:
+            #         file.write("This is a default note.")
+            #     QMessageBox.information(self, "Success", f"Default note '{default_note_path}' created successfully.")
+            # except OSError as e:
+            #     QMessageBox.critical(self, "Error", f"Failed to create default note in folder '{folder_name}': {e}")
 
         except OSError as e:
             QMessageBox.critical(self, "Error", f"Failed to create folder '{folder_name}': {e}")
-            del self.new_folder_path
+            self.new_folder_path = None  # 如果失败则将文件夹路径置为空
 
     def new_note(self):
-        self.MainNotes.clear()
-        self.keyWords.clear()
-        self.conclusion.clear()
-        self.saved = False
-        self.current_filename = None  # 重置当前文件名
-        QMessageBox.information(self, "Note Cleared", "The note interface has been cleared.")
+        if self.saved == True:
+            self.MainNotes.clear()
+            self.keyWords.clear()
+            self.conclusion.clear()
+            self.saved = False
+            self.current_filename = None  # 重置当前文件名
+            QMessageBox.information(self, "Note Cleared", "The note interface has been cleared.")
+        elif self.saved == False:
+            reply = QMessageBox.question(self, "Save Changes", "Do you want to save the changes?",
+                                         QMessageBox.Yes | QMessageBox.No | QMessageBox.Cancel)
+            if reply == QMessageBox.Yes:
+                self.save()
+                self.MainNotes.clear()
+                self.keyWords.clear()
+                self.conclusion.clear()
+                self.saved = False
+                self.current_filename = None
 
     def open(self):
-        start_dir = getattr(self, 'new_folder_path', self.last_open_directory)
-        filename, _ = QFileDialog.getOpenFileName(self, "Open File", start_dir, "Note Files (*.note)")
-        if filename:
-            with open(filename, 'r') as file:
-                content = file.read().split('###\n', 2)
-                if len(content) == 3:
-                    keywords, mainNotes, conclusion = content
-                    self.keyWords.setPlainText(keywords)
-                    self.MainNotes.setPlainText(mainNotes)
-                    self.conclusion.setPlainText(conclusion)
-                    self.saved = True
-                    self.current_filename = filename
-                    self.last_open_directory = os.path.dirname(filename)  # 更新上次打开的目录
+        # 如果当前笔记为空，则直接打开文件
+        if (self.keyWords.toPlainText() == "" and self.MainNotes.toPlainText() == "" and self.conclusion.toPlainText() == "") or self.saved == True :
+            start_dir = 'notes'
+            filename, _ = QFileDialog.getOpenFileName(self, "Open File", start_dir, "Note Files (*.note)")
+            if filename:
+                try:
+                    with open(filename, 'r') as file:
+                        keywords, mainNotes, conclusion = file.read().split('\n###\n', 2)
+                        self.keyWords.setHtml(keywords)  # 使用 setPlainText 来加载纯文本内容
+                        self.MainNotes.setHtml(mainNotes)
+                        self.conclusion.setHtml(conclusion)
+                        self.saved = False
+                        self.current_filename = filename
+                        self.last_open_directory = os.path.dirname(filename)  # 更新上次打开的目录
+                except Exception as e:
+                    QMessageBox.critical(self, "Error", f"Failed to open file: {e}")
+        # 如果当前笔记不为空，则询问是否保存当前笔记
+        elif self.saved == False:
+            reply = QMessageBox.question(self, "Save Changes", "Do you want to save the changes?",
+                                         QMessageBox.Yes | QMessageBox.No | QMessageBox.Cancel)
+            if reply == QMessageBox.Yes:
+                self.save()
+                self.saved = False
+                self.current_filename = None
+            self.MainNotes.clear()
+            self.keyWords.clear()
+            self.conclusion.clear()
+            start_dir = 'notes'
+            filename, _ = QFileDialog.getOpenFileName(self, "Open File", start_dir, "Note Files (*.note)")
+            if filename:
+                try:
+                    with open(filename, 'r') as file:
+                        keywords, mainNotes, conclusion = file.read().split('\n###\n', 2)
+                        self.keyWords.setHtml(keywords)  # 使用 setHtml 来加载 HTML 格式内容
+                        self.MainNotes.setHtml(mainNotes)
+                        self.conclusion.setHtml(conclusion)
+                        self.saved = True
+                        self.current_filename = filename
+                        self.last_open_directory = os.path.dirname(filename)  # 更新上次打开的目录
+                except Exception as e:
+                    QMessageBox.critical(self, "Error", f"Failed to open file: {e}")
+
 
     def save(self):
         if self.current_filename:  # 如果已经打开了文件，则直接保存
             with open(self.current_filename, 'w') as file:
-                textKeywords = self.keyWords.toPlainText()
-                textMainNotes = self.MainNotes.toPlainText()
-                textConclusion = self.conclusion.toPlainText()
-                file.write(textKeywords + '###\n' + textMainNotes + '###\n' + textConclusion)
+                textKeywords = self.keyWords.toHtml()  # 使用HTML保存文本内容，包括格式和颜色
+                textMainNotes = self.MainNotes.toHtml()
+                textConclusion = self.conclusion.toHtml()
+                file.write(textKeywords + '\n###\n' + textMainNotes + '\n###\n' + textConclusion)
             self.saved = True  # 更新保存状态
         else:  # 如果没有打开文件（即新建的笔记），则调用 save_as 方法
             self.save_as()
 
     def save_as(self):
-        start_dir = getattr(self, 'new_folder_path', self.last_open_directory)
-
+        start_dir = 'notes'
         filename, _ = QFileDialog.getSaveFileName(self, "Save File", start_dir, "Note Files (*.note)")
         if filename:
-            with open(filename, 'w') as file:
-                textKeywords = self.keyWords.toPlainText()
-                textMainNotes = self.MainNotes.toPlainText()
-                textConclusion = self.conclusion.toPlainText()
-                file.write(textKeywords + '###\n' + textMainNotes + '###\n' + textConclusion)
+            with open(filename, 'w', encoding='utf-8') as file:
+                textKeywords = self.keyWords.toHtml()  # 使用HTML保存文本内容，包括格式和颜色
+                textMainNotes = self.MainNotes.toHtml()
+                textConclusion = self.conclusion.toHtml()
+                file.write(textKeywords + '\n###\n' + textMainNotes + '\n###\n' + textConclusion)
             self.saved = True
             self.current_filename = filename
             self.last_open_directory = os.path.dirname(filename)  # 更新上次打开的目录
@@ -184,64 +225,64 @@ class NotePage(QMainWindow, Ui_CornellNotes):
 
                 cursor.setPosition(start, QTextCursor.MoveAnchor)  # Reset cursor position
 
-    def mouseDoubleClickEvent(self, event):
-        if self.current_text_edit and self.current_text_edit.underMouse():
-            self.toggle_bold()
-            self.toggle_italic()
-            self.toggle_underline()
-        super().mouseDoubleClickEvent(event)
-
-    def toggle_bold(self):
-        if self.current_text_edit:
-            cursor = self.current_text_edit.textCursor()
-            if cursor.hasSelection():
-                start = cursor.selectionStart()
-                end = cursor.selectionEnd()
-                cursor.setPosition(start)
-
-                while cursor.position() < end:
-                    cursor.movePosition(QTextCursor.NextCharacter, QTextCursor.KeepAnchor)
-                    char_format = cursor.charFormat()
-                    weight = QFont.Bold if char_format.fontWeight() != QFont.Bold else QFont.Normal
-                    char_format.setFontWeight(weight)
-                    cursor.mergeCharFormat(char_format)
-                    cursor.clearSelection()
-
-                cursor.setPosition(start, QTextCursor.MoveAnchor)  # Reset cursor position
-
-    def toggle_italic(self):
-        if self.current_text_edit:
-            cursor = self.current_text_edit.textCursor()
-            if cursor.hasSelection():
-                start = cursor.selectionStart()
-                end = cursor.selectionEnd()
-                cursor.setPosition(start)
-
-                while cursor.position() < end:
-                    cursor.movePosition(QTextCursor.NextCharacter, QTextCursor.KeepAnchor)
-                    char_format = cursor.charFormat()
-                    char_format.setFontItalic(not char_format.fontItalic())
-                    cursor.mergeCharFormat(char_format)
-                    cursor.clearSelection()
-
-                cursor.setPosition(start, QTextCursor.MoveAnchor)  # Reset cursor position
-
-    def toggle_underline(self):
-        if self.current_text_edit:
-            cursor = self.current_text_edit.textCursor()
-            if cursor.hasSelection():
-                start = cursor.selectionStart()
-                end = cursor.selectionEnd()
-                cursor.setPosition(start)
-
-                while cursor.position() < end:
-                    cursor.movePosition(QTextCursor.NextCharacter, QTextCursor.KeepAnchor)
-                    char_format = cursor.charFormat()
-                    char_format.setFontUnderline(not char_format.fontUnderline())
-                    cursor.mergeCharFormat(char_format)
-                    cursor.clearSelection()
-
-                cursor.setPosition(start, QTextCursor.MoveAnchor)  # Reset cursor position
+    # def mouseDoubleClickEvent(self, event):
+    #     if self.current_text_edit and self.current_text_edit.underMouse():
+    #         self.toggle_bold()
+    #         self.toggle_italic()
+    #         self.toggle_underline()
+    #     super().mouseDoubleClickEvent(event)
+    #
+    # def toggle_bold(self):
+    #     if self.current_text_edit:
+    #         cursor = self.current_text_edit.textCursor()
+    #         if cursor.hasSelection():
+    #             start = cursor.selectionStart()
+    #             end = cursor.selectionEnd()
+    #             cursor.setPosition(start)
+    #
+    #             while cursor.position() < end:
+    #                 cursor.movePosition(QTextCursor.NextCharacter, QTextCursor.KeepAnchor)
+    #                 char_format = cursor.charFormat()
+    #                 weight = QFont.Bold if char_format.fontWeight() != QFont.Bold else QFont.Normal
+    #                 char_format.setFontWeight(weight)
+    #                 cursor.mergeCharFormat(char_format)
+    #                 cursor.clearSelection()
+    #
+    #             cursor.setPosition(start, QTextCursor.MoveAnchor)  # Reset cursor position
+    #
+    # def toggle_italic(self):
+    #     if self.current_text_edit:
+    #         cursor = self.current_text_edit.textCursor()
+    #         if cursor.hasSelection():
+    #             start = cursor.selectionStart()
+    #             end = cursor.selectionEnd()
+    #             cursor.setPosition(start)
+    #
+    #             while cursor.position() < end:
+    #                 cursor.movePosition(QTextCursor.NextCharacter, QTextCursor.KeepAnchor)
+    #                 char_format = cursor.charFormat()
+    #                 char_format.setFontItalic(not char_format.fontItalic())
+    #                 cursor.mergeCharFormat(char_format)
+    #                 cursor.clearSelection()
+    #
+    #             cursor.setPosition(start, QTextCursor.MoveAnchor)  # Reset cursor position
+    #
+    # def toggle_underline(self):
+    #     if self.current_text_edit:
+    #         cursor = self.current_text_edit.textCursor()
+    #         if cursor.hasSelection():
+    #             start = cursor.selectionStart()
+    #             end = cursor.selectionEnd()
+    #             cursor.setPosition(start)
+    #
+    #             while cursor.position() < end:
+    #                 cursor.movePosition(QTextCursor.NextCharacter, QTextCursor.KeepAnchor)
+    #                 char_format = cursor.charFormat()
+    #                 char_format.setFontUnderline(not char_format.fontUnderline())
+    #                 cursor.mergeCharFormat(char_format)
+    #                 cursor.clearSelection()
+    #
+    #             cursor.setPosition(start, QTextCursor.MoveAnchor)  # Reset cursor position
 
     def font_colour(self):
         if self.current_text_edit:
@@ -321,7 +362,6 @@ class NotePage(QMainWindow, Ui_CornellNotes):
         self.apply_text_format(format)
 
     def insert_picture(self):
-        # 插入可调整大小的图片
         filename, _ = QFileDialog.getOpenFileName(self, "Insert Image", "", "Images (*.png *.xpm *.jpg *.bmp *.gif)")
         if filename:
             image = QImage(filename)
@@ -329,10 +369,18 @@ class NotePage(QMainWindow, Ui_CornellNotes):
                 factor, ok = QInputDialog.getDouble(self, "Insert Image", "Enter scale factor (e.g., 1.0, 0.5, etc.):",
                                                     1.0, 0.1, 10.0, 1)
                 if ok:
-                    image = image.scaled(image.width() * factor, image.height() * factor, Qt.KeepAspectRatio,
-                                         Qt.SmoothTransformation)
+                    new_width = int(image.width() * factor)
+                    new_height = int(image.height() * factor)
+                    image = image.scaled(new_width, new_height, Qt.KeepAspectRatio, Qt.SmoothTransformation)
+
+                    buffer = BytesIO()
+                    image.save(buffer, "PNG")  # 确保指定文件格式为 "PNG"
+                    base64_data = base64.b64encode(buffer.getvalue()).decode('utf-8')
+
+                    html_img_tag = f'<img src="data:image/png;base64,{base64_data}" />'
                     cursor = self.MainNotes.textCursor()
-                    cursor.insertImage(image)
+                    cursor.insertHtml(html_img_tag)
+                    cursor.insertHtml(html_img_tag)
 
     def apply_text_format(self, format):
         # 应用文本格式
