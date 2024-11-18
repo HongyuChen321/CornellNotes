@@ -14,7 +14,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_MainPage(object):
     def setupUi(self, MainPage):
         MainPage.setObjectName("MainPage")
-        MainPage.resize(781, 650)
+        MainPage.resize(781, 649)
         MainPage.setMinimumSize(QtCore.QSize(10, 10))
         MainPage.setSizeIncrement(QtCore.QSize(0, 0))
         font = QtGui.QFont()
@@ -105,6 +105,8 @@ class Ui_MainPage(object):
 "    border: 1px solid #cccccc;\n"
 "}\n"
 "")
+        self.toDo.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
+        self.toDo.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
         self.toDo.setObjectName("toDo")
         self.label_4 = QtWidgets.QLabel(self.centralwidget)
         self.label_4.setGeometry(QtCore.QRect(510, 90, 91, 31))

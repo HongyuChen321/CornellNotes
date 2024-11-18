@@ -1,5 +1,5 @@
 from ui_main_page import Ui_MainPage
-from PyQt5.QtWidgets import QMainWindow, QApplication, QFileDialog, QMessageBox
+from PyQt5.QtWidgets import QMainWindow, QApplication, QFileDialog, QMessageBox, QInputDialog
 import sys
 import os
 from note_page import NotePage
@@ -10,6 +10,7 @@ class MainPage(QMainWindow, Ui_MainPage):
         self.setupUi(self)
         self.connect()
         self.load_memo_content()
+        self.note_page = NotePage()
     def connect(self):
         # File Menu初始化
         self.actionNewProgram_2.triggered.connect(self.new_program)
@@ -27,7 +28,7 @@ class MainPage(QMainWindow, Ui_MainPage):
             for filename in os.listdir(memo_folder):
                 file_path = os.path.join(memo_folder, filename)
                 if os.path.isfile(file_path):
-                    with open(file_path, 'r') as file:
+                    with open(file_path, 'r', encoding='UTF-8') as file:
                         memo_content += file.read() + '\n'
         self.toDo.setPlainText(memo_content)
 
@@ -36,7 +37,7 @@ class MainPage(QMainWindow, Ui_MainPage):
         if not os.path.exists(memo_folder):
             os.makedirs(memo_folder)
         memo_file_path = os.path.join(memo_folder, 'memo.note')
-        with open(memo_file_path, 'w') as file:
+        with open(memo_file_path, 'w', encoding='UTF-8') as file:
             file.write(self.toDo.toPlainText())
 
     def closeEvent(self, event):
@@ -83,13 +84,33 @@ class MainPage(QMainWindow, Ui_MainPage):
         msg_box.exec_()
 
     def new_program(self):
-        pass
+        folder_name, ok = QInputDialog.getText(self, "Create New Folder", "Enter folder name:")
+        if not ok or not folder_name:
+            return
+
+        base_dir = "notes"
+        self.new_folder_path = os.path.join(base_dir, folder_name)  # 存储新创建的文件夹路径
+
+        try:
+            os.makedirs(self.new_folder_path, exist_ok=True)
+            QMessageBox.information(self, "Success", f"Folder '{folder_name}' created successfully.")
+
+        except OSError as e:
+            QMessageBox.critical(self, "Error", f"Failed to create folder '{folder_name}': {e}")
+            self.new_folder_path = None  # 如果失败则将文件夹路径置为空
 
     def new_note(self):
-        pass
+        if self.note_page.isHidden():
+            self.note_page.show()
+        else:
+            self.note_page.new_note()
 
     def open(self):
-        pass
+        if self.note_page.isHidden():
+            self.note_page.show()
+            self.note_page.open()
+        else:
+            self.note_page.open()
 
     def save(self):
         pass
