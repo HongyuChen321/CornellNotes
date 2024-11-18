@@ -1,6 +1,5 @@
 import sys
-from PyQt5.QtWidgets import QApplication, QMainWindow
-from note_page import NotePage
+from PyQt5.QtWidgets import QApplication
 from main_page import MainPage
 
 if __name__ == '__main__':
