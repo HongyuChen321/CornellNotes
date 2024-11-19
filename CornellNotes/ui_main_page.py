@@ -83,7 +83,7 @@ class Ui_MainPage(object):
 "")
         self.searchBar.setObjectName("searchBar")
         self.noteMenu = QtWidgets.QListView(self.centralwidget)
-        self.noteMenu.setGeometry(QtCore.QRect(320, 120, 451, 471))
+        self.noteMenu.setGeometry(QtCore.QRect(320, 130, 451, 461))
         font = QtGui.QFont()
         font.setFamily("宋体")
         font.setPointSize(12)
@@ -108,17 +108,6 @@ class Ui_MainPage(object):
         self.toDo.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
         self.toDo.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
         self.toDo.setObjectName("toDo")
-        self.label_4 = QtWidgets.QLabel(self.centralwidget)
-        self.label_4.setGeometry(QtCore.QRect(510, 90, 91, 31))
-        font = QtGui.QFont()
-        font.setFamily("宋体")
-        font.setPointSize(14)
-        self.label_4.setFont(font)
-        self.label_4.setStyleSheet("QLabel {\n"
-"    color: white;\n"
-"}\n"
-"")
-        self.label_4.setObjectName("label_4")
         self.searchButton = QtWidgets.QPushButton(self.centralwidget)
         self.searchButton.setGeometry(QtCore.QRect(730, 40, 41, 41))
         self.searchButton.setStyleSheet("QPushButton {\n"
@@ -154,7 +143,7 @@ class Ui_MainPage(object):
         self.verticalScrollBar.setOrientation(QtCore.Qt.Vertical)
         self.verticalScrollBar.setObjectName("verticalScrollBar")
         self.verticalScrollBar_2 = QtWidgets.QScrollBar(self.centralwidget)
-        self.verticalScrollBar_2.setGeometry(QtCore.QRect(750, 130, 20, 451))
+        self.verticalScrollBar_2.setGeometry(QtCore.QRect(750, 140, 20, 441))
         self.verticalScrollBar_2.setStyleSheet("QScrollBar:vertical {\n"
 "    background: rgba(0, 0, 0, 50);  /* 半透明背景 */\n"
 "    width: 10px;  /* 滚动条宽度 */\n"
@@ -183,6 +172,17 @@ class Ui_MainPage(object):
         self.label_5.setScaledContents(True)
         self.label_5.setAlignment(QtCore.Qt.AlignCenter)
         self.label_5.setObjectName("label_5")
+        self.listButton = QtWidgets.QPushButton(self.centralwidget)
+        self.listButton.setGeometry(QtCore.QRect(500, 90, 91, 31))
+        self.listButton.setStyleSheet("QPushButton {\n"
+"    border-radius: 15px;               /* 设置圆角 */\n"
+"    background-color: rgba(255, 255, 255, 128); /* 设置半透明背景，黑色50%透明 */\n"
+"    color: white;                     /* 字体颜色设置为白色 */\n"
+"    font: 16px \"宋体\";                /* 字体大小为16px，字体类型为宋体 */\n"
+"    border: 1px solid rgba(255, 255, 255, 50); /* 边框白色50%透明 */\n"
+"}\n"
+"")
+        self.listButton.setObjectName("listButton")
         self.label_5.raise_()
         self.calendarWidget.raise_()
         self.label.raise_()
@@ -191,16 +191,16 @@ class Ui_MainPage(object):
         self.searchBar.raise_()
         self.noteMenu.raise_()
         self.toDo.raise_()
-        self.label_4.raise_()
         self.searchButton.raise_()
         self.verticalScrollBar.raise_()
         self.verticalScrollBar_2.raise_()
+        self.listButton.raise_()
         MainPage.setCentralWidget(self.centralwidget)
         self.statusbar = QtWidgets.QStatusBar(MainPage)
         self.statusbar.setObjectName("statusbar")
         MainPage.setStatusBar(self.statusbar)
         self.menuBar = QtWidgets.QMenuBar(MainPage)
-        self.menuBar.setGeometry(QtCore.QRect(0, 0, 781, 23))
+        self.menuBar.setGeometry(QtCore.QRect(0, 0, 781, 21))
         self.menuBar.setObjectName("menuBar")
         self.menuFile = QtWidgets.QMenu(self.menuBar)
         self.menuFile.setObjectName("menuFile")
@@ -245,7 +245,7 @@ class Ui_MainPage(object):
         self.label.setText(_translate("MainPage", "日历"))
         self.label_2.setText(_translate("MainPage", "搜索栏"))
         self.label_3.setText(_translate("MainPage", "待办"))
-        self.label_4.setText(_translate("MainPage", "笔记目录"))
+        self.listButton.setText(_translate("MainPage", "笔记目录"))
         self.menuFile.setTitle(_translate("MainPage", "File"))
         self.actionNewProgram.setText(_translate("MainPage", "NewProgram"))
         self.actionNewNote.setText(_translate("MainPage", "NewNote"))

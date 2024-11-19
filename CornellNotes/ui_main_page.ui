@@ -161,9 +161,9 @@
     <property name="geometry">
      <rect>
       <x>320</x>
-      <y>120</y>
+      <y>130</y>
       <width>451</width>
-      <height>471</height>
+      <height>461</height>
      </rect>
     </property>
     <property name="font">
@@ -207,31 +207,6 @@
     </property>
     <property name="horizontalScrollBarPolicy">
      <enum>Qt::ScrollBarAlwaysOff</enum>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label_4">
-    <property name="geometry">
-     <rect>
-      <x>510</x>
-      <y>90</y>
-      <width>91</width>
-      <height>31</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <family>宋体</family>
-      <pointsize>14</pointsize>
-     </font>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">QLabel {
-    color: white;
-}
-</string>
-    </property>
-    <property name="text">
-     <string>笔记目录</string>
     </property>
    </widget>
    <widget class="QPushButton" name="searchButton">
@@ -295,9 +270,9 @@ QScrollBar::up-arrow:vertical, QScrollBar::down-arrow:vertical {
     <property name="geometry">
      <rect>
       <x>750</x>
-      <y>130</y>
+      <y>140</y>
       <width>20</width>
-      <height>451</height>
+      <height>441</height>
      </rect>
     </property>
     <property name="styleSheet">
@@ -349,6 +324,29 @@ QScrollBar::up-arrow:vertical, QScrollBar::down-arrow:vertical {
      <set>Qt::AlignCenter</set>
     </property>
    </widget>
+   <widget class="QPushButton" name="listButton">
+    <property name="geometry">
+     <rect>
+      <x>500</x>
+      <y>90</y>
+      <width>91</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton {
+    border-radius: 15px;               /* 设置圆角 */
+    background-color: rgba(255, 255, 255, 128); /* 设置半透明背景，黑色50%透明 */
+    color: white;                     /* 字体颜色设置为白色 */
+    font: 16px &quot;宋体&quot;;                /* 字体大小为16px，字体类型为宋体 */
+    border: 1px solid rgba(255, 255, 255, 50); /* 边框白色50%透明 */
+}
+</string>
+    </property>
+    <property name="text">
+     <string>笔记目录</string>
+    </property>
+   </widget>
    <zorder>label_5</zorder>
    <zorder>calendarWidget</zorder>
    <zorder>label</zorder>
@@ -357,10 +355,10 @@ QScrollBar::up-arrow:vertical, QScrollBar::down-arrow:vertical {
    <zorder>searchBar</zorder>
    <zorder>noteMenu</zorder>
    <zorder>toDo</zorder>
-   <zorder>label_4</zorder>
    <zorder>searchButton</zorder>
    <zorder>verticalScrollBar</zorder>
    <zorder>verticalScrollBar_2</zorder>
+   <zorder>listButton</zorder>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
   <widget class="QMenuBar" name="menuBar">
@@ -369,7 +367,7 @@ QScrollBar::up-arrow:vertical, QScrollBar::down-arrow:vertical {
      <x>0</x>
      <y>0</y>
      <width>781</width>
-     <height>23</height>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">

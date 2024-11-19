@@ -1,8 +1,10 @@
 from ui_main_page import Ui_MainPage
-from PyQt5.QtWidgets import QMainWindow, QApplication, QFileDialog, QMessageBox, QInputDialog
+from PyQt5.QtWidgets import QMainWindow, QApplication, QFileDialog, QMessageBox, QInputDialog, QVBoxLayout, QLabel, \
+    QTextEdit, QTextBrowser, QDialog
 import sys
 import os
 from note_page import NotePage
+from urllib.parse import unquote
 
 class MainPage(QMainWindow, Ui_MainPage):
     def __init__(self):
@@ -20,6 +22,10 @@ class MainPage(QMainWindow, Ui_MainPage):
         self.actionSaveAs_2.triggered.connect(self.save_as)
         # 功能初始化
         self.searchButton.clicked.connect(self.search)
+        self.listButton.clicked.connect(self.list)
+
+    def list(self):
+        pass
 
     def load_memo_content(self):
         memo_folder = os.path.join('resources', 'memo')
@@ -53,35 +59,134 @@ class MainPage(QMainWindow, Ui_MainPage):
             return  # 如果没有输入关键词，则返回
 
         # 指定笔记文件存储路径
-        notes_directory = QFileDialog.getExistingDirectory(self, "选择文件夹")
-        print(notes_directory)
-
-        # notes_directory = "folder_path" # 替换为实际路径
-        matching_files = []  # 用于存储匹配的文件名
+        notes_directory = QFileDialog.getExistingDirectory(self, "选择检索文件夹")
+        matching_files = []  # 用于存储匹配的文件路径
 
         for root, dirs, files in os.walk(notes_directory):
             for filename in files:
                 if filename.endswith(".note"):
                     file_path = os.path.join(root, filename)
-                    print(filename)
                     with open(file_path, 'r', encoding='utf-8') as file:
                         content = file.read()
-                        # 检查文件内容是否包含关键词
                         if keyword in content:
-                            matching_files.append(file_path)  # 添加匹配的文件名
+                            matching_files.append(file_path)
 
-            print(matching_files)  # 显示调试
+        print(f"Matching files: {matching_files}")  # 显示调试
 
         # 显示
         if not matching_files:
             QMessageBox.information(None, "提示", "没有匹配到相关文件哦。")
             return
 
-        file_content = "\n".join(matching_files)
-        msg_box = QMessageBox()
-        msg_box.setWindowTitle("检索结果")
-        msg_box.setText(file_content)
-        msg_box.exec_()
+        self.display_results(matching_files)
+
+    def display_results(self, matching_files):
+        dialog = QDialog(self)
+        dialog.setWindowTitle("检索结果")
+        dialog.resize(400, 300)
+
+        text_browser = QTextBrowser(dialog)
+        html_content = "<p>找到以下匹配文件：</p><ul>"
+        for file_path in matching_files:
+            # 标准化路径并替换反斜杠为正斜杠
+            norm_file_path = os.path.normpath(file_path).replace('\\', '/')
+            encoded_file_path = norm_file_path
+            # 使用 os.path.basename(file_path) 提取文件名作为链接文本
+            link_text = f"<a href='file://{encoded_file_path}'>{file_path}</a><br/>"
+            html_content += f"<li>{link_text}</li>"
+        html_content += "</ul>"
+
+        text_browser.setHtml(html_content)
+        text_browser.setOpenExternalLinks(False)
+        text_browser.anchorClicked.connect(lambda url: self.open_file(url, dialog))
+
+        layout = QVBoxLayout()
+        layout.addWidget(text_browser)
+        dialog.setLayout(layout)
+
+        dialog.exec_()
+
+    def open_file(self, url, parent_dialog):
+        full_file_path = unquote(url.toString()).replace('file://', '')
+        full_file_path = full_file_path.replace('\\', '/')
+        if len(full_file_path) > 1 and full_file_path[0].lower() == 'c' and full_file_path[1] != ':':
+            full_file_path = 'C:' + full_file_path[1:]  # 添加驱动器字母和冒号，并删除原来的第一个字符
+        elif len(full_file_path) > 1 and full_file_path[0].lower() == 'd' and full_file_path[1] != ':':
+            full_file_path = 'D:' + full_file_path[1:]  # 添加驱动器字母和冒号，并删除原来的第一个字符
+        elif len(full_file_path) > 1 and full_file_path[0].lower() == 'e' and full_file_path[1] != ':':
+            full_file_path = 'E:' + full_file_path[1:]  # 添加驱动器字母和冒号，并删除原来的第一个字符
+        elif len(full_file_path) > 1 and full_file_path[0].lower() == 'f' and full_file_path[1] != ':':
+            full_file_path = 'F:' + full_file_path[1:]  # 添加驱动器字母和冒号，并删除原来的第一个字符
+        elif len(full_file_path) > 0 and full_file_path[0].lower() == 'c':
+            full_file_path = 'C:' + full_file_path[1:]  # 添加驱动器字母和冒号
+        elif len(full_file_path) > 0 and full_file_path[0].lower() == 'd':
+            full_file_path = 'D:' + full_file_path[1:]  # 添加驱动器字母和冒号
+        elif len(full_file_path) > 0 and full_file_path[0].lower() == 'e':
+            full_file_path = 'E:' + full_file_path[1:]  # 添加驱动器字母和冒号
+        elif len(full_file_path) > 0 and full_file_path[0].lower() == 'f':
+            full_file_path = 'F:' + full_file_path[1:]  # 添加驱动器字母和冒号
+        print(f"Opening file: {full_file_path}")
+
+        if not full_file_path or not os.path.exists(full_file_path):
+            QMessageBox.critical(self, "Error", "Invalid file path or file does not exist.")
+            return
+
+        filename = os.path.basename(full_file_path)  # 提取文件名
+
+        if self.note_page.isHidden():
+            self.note_page.show()
+            if filename:
+                try:
+                    with open(full_file_path, 'r', encoding="UTF-8") as file:
+                        content = file.read()
+                        parts = content.split('\n###\n', 2)
+                        if len(parts) != 3:
+                            raise ValueError("File format error: Missing sections.")
+                        keywords, mainNotes, conclusion = parts
+                        self.note_page.keyWords.setHtml(keywords)
+                        self.note_page.MainNotes.setHtml(mainNotes)
+                        self.note_page.conclusion.setHtml(conclusion)
+                        self.note_page.saved = False
+                        self.note_page.current_filename = full_file_path  # 存储完整路径
+                        self.note_page.last_open_directory = os.path.dirname(full_file_path)  # 更新上次打开的目录
+                        self.note_page.show()  # 显示笔记页面
+                except FileNotFoundError:
+                    QMessageBox.critical(self, "Error", f"File not found: {full_file_path}")
+                except UnicodeDecodeError:
+                    QMessageBox.critical(self, "Error", f"Failed to decode file: {full_file_path}")
+                except ValueError as ve:
+                    QMessageBox.critical(self, "Error", str(ve))
+                except Exception as e:
+                    QMessageBox.critical(self, "Error", f"Unexpected error: {str(e)}")
+
+            parent_dialog.close()  # 关闭检索结果对话框
+
+        else:
+            if filename:
+                try:
+                    with open(full_file_path, 'r', encoding="UTF-8") as file:
+                        content = file.read()
+                        parts = content.split('\n###\n', 2)
+                        if len(parts) != 3:
+                            raise ValueError("File format error: Missing sections.")
+                        keywords, mainNotes, conclusion = parts
+                        self.note_page.keyWords.setHtml(keywords)
+                        self.note_page.MainNotes.setHtml(mainNotes)
+                        self.note_page.conclusion.setHtml(conclusion)
+                        self.note_page.saved = False
+                        self.note_page.current_filename = full_file_path  # 存储完整路径
+                        self.note_page.last_open_directory = os.path.dirname(full_file_path)  # 更新上次打开的目录
+                        self.note_page.show()  # 显示笔记页面
+                except FileNotFoundError:
+                    QMessageBox.critical(self, "Error", f"File not found: {full_file_path}")
+                except UnicodeDecodeError:
+                    QMessageBox.critical(self, "Error", f"Failed to decode file: {full_file_path}")
+                except ValueError as ve:
+                    QMessageBox.critical(self, "Error", str(ve))
+                except Exception as e:
+                    QMessageBox.critical(self, "Error", f"Unexpected error: {str(e)}")
+
+            parent_dialog.close()  # 关闭检索结果对话框
 
     def new_program(self):
         folder_name, ok = QInputDialog.getText(self, "Create New Folder", "Enter folder name:")
