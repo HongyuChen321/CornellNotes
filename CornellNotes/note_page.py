@@ -299,23 +299,23 @@ class NotePage(QMainWindow, Ui_CornellNotes):
         if filename:
             image = QImage(filename)
             if not image.isNull():
-                factor, ok = QInputDialog.getDouble(self, "Insert Image", "Enter scale factor (e.g., 1.0, 0.5, etc.):",
-                                                    1.0, 0.1, 10.0, 1)
-                if ok:
-                    new_width = int(image.width() * factor)
-                    new_height = int(image.height() * factor)
-                    image = image.scaled(new_width, new_height, Qt.KeepAspectRatio, Qt.SmoothTransformation)
+                width, ok_width = QInputDialog.getInt(self, "Insert Image", "Enter width:", 100, 10, 1000)
+                if ok_width:
+                    height, ok_height = QInputDialog.getInt(self, "Insert Image", "Enter height:", 100, 10, 1000)
+                    if ok_height:
+                        new_width = width
+                        new_height = height
+                        image = image.scaled(new_width, new_height, Qt.KeepAspectRatio, Qt.SmoothTransformation)
 
-                    buffer = QBuffer()
-                    buffer.open(QBuffer.ReadWrite)
-                    image.save(buffer, "PNG")  # 确保指定文件格式为 "PNG"
-                    base64_data = base64.b64encode(buffer.data()).decode('utf-8')
-                    print(base64_data)
+                        buffer = QBuffer()
+                        buffer.open(QBuffer.ReadWrite)
+                        image.save(buffer, "PNG")  # Ensure the specified file format is "PNG"
+                        base64_data = base64.b64encode(buffer.data()).decode('utf-8')
 
-                    html_img_tag = f'<img src="data:image/png;base64,{base64_data}" style="width:500px;height:auto;"/>'
-                    cursor = self.MainNotes.textCursor()
-                    cursor.insertHtml(html_img_tag)
-
+                        html_img_tag = f'<img src="data:image/png;base64,{base64_data}" style="width:auto;height:auto;"/>'
+                        if self.current_text_edit:  # Ensure there is a current text edit
+                            cursor = self.current_text_edit.textCursor()
+                            cursor.insertHtml(html_img_tag)
     def apply_text_format(self, format):
         # 应用文本格式
         cursor = self.MainNotes.textCursor()

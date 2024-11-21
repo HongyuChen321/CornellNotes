@@ -9,7 +9,8 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-
+from PyQt5.QtCore import QStringListModel
+from PyQt5.QtWidgets import  QListView
 
 class Ui_MainPage(object):
     def setupUi(self, MainPage):
@@ -84,6 +85,10 @@ class Ui_MainPage(object):
         self.searchBar.setObjectName("searchBar")
         self.noteMenu = QtWidgets.QListView(self.centralwidget)
         self.noteMenu.setGeometry(QtCore.QRect(320, 130, 451, 461))
+
+        self.model = QStringListModel()
+        self.noteMenu.setModel(self.model)
+
         font = QtGui.QFont()
         font.setFamily("宋体")
         font.setPointSize(12)
