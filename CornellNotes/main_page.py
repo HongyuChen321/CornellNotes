@@ -13,6 +13,8 @@ class MainPage(QMainWindow, Ui_MainPage):
         self.connect()
         self.load_memo_content()
         self.note_page = NotePage()
+        self.auto_list_files()
+        self.last_dubble_clicked_path = 'notes'
 
     def connect(self):
         # File Menu初始化
@@ -24,11 +26,73 @@ class MainPage(QMainWindow, Ui_MainPage):
         # 功能初始化
         self.searchButton.clicked.connect(self.search)
         self.listButton.clicked.connect(self.list_files)
+        self.noteMenu.doubleClicked.connect(self.on_noteMenu_double_clicked)
 
+    def auto_list_files(self):
+        # 指定要自动列出文件的目录
+        directory = 'notes'
+        if directory:
+            # 清除旧的文件列表
+            self.model.setStringList([])
+
+            # 使用QDir遍历目录中的文件
+            dir_obj = QDir(directory)
+            file_list = dir_obj.entryList(['*'], QDir.Files | QDir.Dirs | QDir.NoDotAndDotDot)
+
+            # 将文件列表转换为QStringList，并设置到模型中
+            self.model.setStringList(list(file_list))
+
+    def on_noteMenu_double_clicked(self, index):
+        # 获取双击的文件路径
+        file_path = self.model.stringList()[index.row()]
+        full_file_path = os.path.join(self.last_dubble_clicked_path, file_path)
+        print(f"Double clicked: {full_file_path}")
+
+        if os.path.isdir(full_file_path):
+            # 如果是文件夹，清空viewlist并显示此文件夹中的所有文件名
+            self.model.setStringList([])
+            dir_obj = QDir(full_file_path)
+            file_list = dir_obj.entryList(['*'], QDir.Files | QDir.Dirs | QDir.NoDotAndDotDot)
+            self.model.setStringList(list(file_list))
+            self.last_dubble_clicked_path = full_file_path
+        elif os.path.isfile(full_file_path) and full_file_path.endswith('.note'):
+            # 如果是note文件
+            if not self.note_page.isHidden():
+                # 如果NotePage已打开，自动保存内容并清除内容
+                self.note_page.save()
+                self.note_page.keyWords.clear()
+                self.note_page.MainNotes.clear()
+                self.note_page.conclusion.clear()
+            else:
+                # 如果NotePage未打开，则打开NotePage
+                self.note_page.show()
+
+            # 显示双击note文件内的内容
+            try:
+                with open(full_file_path, 'r', encoding="UTF-8") as file:
+                    content = file.read()
+                    parts = content.split('\n###\n', 2)
+                    if len(parts) != 3:
+                        raise ValueError("File format error: Missing sections.")
+                    keywords, mainNotes, conclusion = parts
+                    self.note_page.keyWords.setHtml(keywords)
+                    self.note_page.MainNotes.setHtml(mainNotes)
+                    self.note_page.conclusion.setHtml(conclusion)
+                    self.note_page.saved = False
+                    self.note_page.current_filename = full_file_path  # 存储完整路径
+                    self.note_page.last_open_directory = os.path.dirname(full_file_path)  # 更新上次打开的目录
+            except FileNotFoundError:
+                QMessageBox.critical(self, "Error", f"File not found: {full_file_path}")
+            except UnicodeDecodeError:
+                QMessageBox.critical(self, "Error", f"Failed to decode file: {full_file_path}")
+            except ValueError as ve:
+                QMessageBox.critical(self, "Error", str(ve))
+            except Exception as e:
+                QMessageBox.critical(self, "Error", f"Unexpected error: {str(e)}")
 
     def list_files(self):
         #         # 打开目录选择对话框
-        directory = QFileDialog.getExistingDirectory(self, "目录笔记")
+        directory = 'notes'
 
         if directory:
             # 清除旧的文件列表
@@ -40,6 +104,8 @@ class MainPage(QMainWindow, Ui_MainPage):
 
             # 将文件列表转换为QStringList，并设置到模型中
             self.model.setStringList(list(file_list))
+            self.last_dubble_clicked_path = directory
+
 
     def load_memo_content(self):
         memo_folder = os.path.join('resources', 'memo')
