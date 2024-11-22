@@ -1,7 +1,7 @@
 from ui_note_page import Ui_CornellNotes
-from PyQt5.QtWidgets import QMainWindow, QApplication, QFileDialog, QTextEdit, QAction, QFontDialog, QColorDialog, QMessageBox, QInputDialog
+from PyQt5.QtWidgets import QMainWindow, QApplication, QFileDialog, QTextEdit, QAction, QFontDialog, QColorDialog, QMessageBox, QInputDialog, QShortcut
 from PyQt5.QtCore import Qt, QEvent, QBuffer
-from PyQt5.QtGui import QFont, QColor, QTextCharFormat, QTextCursor, QImage
+from PyQt5.QtGui import QFont, QColor, QTextCharFormat, QTextCursor, QImage, QKeySequence
 import sys
 import os
 from unittest import findTestCases
@@ -12,15 +12,14 @@ class NotePage(QMainWindow, Ui_CornellNotes):
     def __init__(self):
         super().__init__()
         self.setupUi(self)
-        # self.setFixedSize(800, 655)  # 设置窗口的固定大小
-        # self.setWindowFlags(self.windowFlags() & ~Qt.WindowMaximizeButtonHint)  # 禁用最大化按钮
         self.connect()
         self.saved = False  # 初始状态为未保存
         self.current_filename = None  # 初始没有当前文件名
         self.last_open_directory = os.getcwd()  # 上次打开的目录
         self.new_folder_path = None  # 新建的文件夹路径，初始为空
         self.current_text_edit = None
-
+        # 快捷键
+        self.add_shortcuts()
         # 设置默认字体大小
         self.set_default_font_size(11)
 
@@ -28,6 +27,15 @@ class NotePage(QMainWindow, Ui_CornellNotes):
         self.MainNotes.installEventFilter(self)
         self.keyWords.installEventFilter(self)
         self.conclusion.installEventFilter(self)
+
+    def add_shortcuts(self):
+        # 添加保存快捷键 Ctrl+S
+        save_shortcut = QShortcut(QKeySequence("Ctrl+S"), self)
+        save_shortcut.activated.connect(self.save)
+
+        # 添加新建笔记快捷键 Ctrl+N
+        new_note_shortcut = QShortcut(QKeySequence("Ctrl+N"), self)
+        new_note_shortcut.activated.connect(self.new_note)
 
     def connect(self):
         # File Menu初始化

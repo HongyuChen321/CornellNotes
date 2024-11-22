@@ -1,17 +1,17 @@
 from ui_main_page import Ui_MainPage
-from PyQt5.QtWidgets import QMainWindow, QApplication, QFileDialog, QMessageBox, QInputDialog, QDialog, QTextBrowser, QVBoxLayout
+from PyQt5.QtWidgets import QMainWindow, QApplication, QFileDialog, QMessageBox, QInputDialog, QDialog, QTextBrowser, QVBoxLayout, QShortcut
+from PyQt5.QtGui import QKeySequence
 import sys
 import os
 from note_page import NotePage
 from PyQt5.QtCore import QDir, Qt, QStringListModel
 from urllib.parse import unquote
 
+
 class MainPage(QMainWindow, Ui_MainPage):
     def __init__(self):
         super().__init__()
         self.setupUi(self)
-        # self.setFixedSize(781, 649)  # Set the fixed size of the window
-        # self.setWindowFlags(self.windowFlags() & ~Qt.WindowMaximizeButtonHint)  # Disable the maximize button
         self.connect()
         self.model = QStringListModel()
         self.noteMenu.setModel(self.model)
@@ -19,6 +19,12 @@ class MainPage(QMainWindow, Ui_MainPage):
         self.note_page = NotePage()
         self.auto_list_files()
         self.last_dubble_clicked_path = 'notes'
+        self.add_shortcuts()
+
+    def add_shortcuts(self):
+        # 添加新建笔记快捷键 Ctrl+N
+        new_note_shortcut = QShortcut(QKeySequence("Ctrl+N"), self)
+        new_note_shortcut.activated.connect(self.new_note)
 
     def connect(self):
         # File Menu初始化
