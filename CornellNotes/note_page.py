@@ -12,6 +12,8 @@ class NotePage(QMainWindow, Ui_CornellNotes):
     def __init__(self):
         super().__init__()
         self.setupUi(self)
+        # self.setFixedSize(800, 655)  # 设置窗口的固定大小
+        # self.setWindowFlags(self.windowFlags() & ~Qt.WindowMaximizeButtonHint)  # 禁用最大化按钮
         self.connect()
         self.saved = False  # 初始状态为未保存
         self.current_filename = None  # 初始没有当前文件名

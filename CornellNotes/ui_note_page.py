@@ -14,7 +14,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_CornellNotes(object):
     def setupUi(self, CornellNotes):
         CornellNotes.setObjectName("CornellNotes")
-        CornellNotes.resize(800, 655)
+        CornellNotes.resize(800, 650)
         self.centralwidget = QtWidgets.QWidget(CornellNotes)
         self.centralwidget.setObjectName("centralwidget")
         self.verticalScrollBar = QtWidgets.QScrollBar(self.centralwidget)
@@ -189,6 +189,8 @@ class Ui_CornellNotes(object):
 "    border: 1px solid #cccccc;\n"
 "}\n"
 "")
+        self.keyWords.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
+        self.keyWords.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
         self.keyWords.setObjectName("keyWords")
         self.MainNotes = QtWidgets.QTextEdit(self.centralwidget)
         self.MainNotes.setGeometry(QtCore.QRect(170, 40, 621, 411))
@@ -197,6 +199,8 @@ class Ui_CornellNotes(object):
 "    border: 1px solid #cccccc;\n"
 "}\n"
 "")
+        self.MainNotes.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
+        self.MainNotes.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
         self.MainNotes.setObjectName("MainNotes")
         self.conclusion = QtWidgets.QTextEdit(self.centralwidget)
         self.conclusion.setGeometry(QtCore.QRect(10, 460, 781, 141))
@@ -205,6 +209,8 @@ class Ui_CornellNotes(object):
 "    border: 1px solid #cccccc;\n"
 "}\n"
 "")
+        self.conclusion.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
+        self.conclusion.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
         self.conclusion.setObjectName("conclusion")
         self.fontSet = QtWidgets.QPushButton(self.centralwidget)
         self.fontSet.setGeometry(QtCore.QRect(10, 0, 31, 31))
@@ -246,7 +252,7 @@ class Ui_CornellNotes(object):
         self.fontSet.raise_()
         CornellNotes.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(CornellNotes)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 800, 26))
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 800, 23))
         self.menubar.setObjectName("menubar")
         self.menu = QtWidgets.QMenu(self.menubar)
         self.menu.setObjectName("menu")

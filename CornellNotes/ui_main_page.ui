@@ -6,14 +6,20 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>781</width>
-    <height>649</height>
+    <width>800</width>
+    <height>650</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
-    <width>10</width>
-    <height>10</height>
+    <width>800</width>
+    <height>650</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>800</width>
+    <height>650</height>
    </size>
   </property>
   <property name="sizeIncrement">
@@ -139,7 +145,7 @@
      <rect>
       <x>320</x>
       <y>40</y>
-      <width>411</width>
+      <width>421</width>
       <height>41</height>
      </rect>
     </property>
@@ -156,14 +162,17 @@
 }
 </string>
     </property>
+    <property name="verticalScrollBarPolicy">
+     <enum>Qt::ScrollBarAlwaysOff</enum>
+    </property>
    </widget>
    <widget class="QListView" name="noteMenu">
     <property name="geometry">
      <rect>
       <x>320</x>
       <y>130</y>
-      <width>451</width>
-      <height>461</height>
+      <width>471</width>
+      <height>471</height>
      </rect>
     </property>
     <property name="font">
@@ -179,6 +188,12 @@
 }
 </string>
     </property>
+    <property name="verticalScrollBarPolicy">
+     <enum>Qt::ScrollBarAlwaysOff</enum>
+    </property>
+    <property name="horizontalScrollBarPolicy">
+     <enum>Qt::ScrollBarAlwaysOff</enum>
+    </property>
    </widget>
    <widget class="QTextEdit" name="toDo">
     <property name="geometry">
@@ -186,7 +201,7 @@
       <x>10</x>
       <y>330</y>
       <width>291</width>
-      <height>261</height>
+      <height>271</height>
      </rect>
     </property>
     <property name="font">
@@ -212,7 +227,7 @@
    <widget class="QPushButton" name="searchButton">
     <property name="geometry">
      <rect>
-      <x>730</x>
+      <x>750</x>
       <y>40</y>
       <width>41</width>
       <height>41</height>
@@ -239,7 +254,7 @@
       <x>276</x>
       <y>340</y>
       <width>20</width>
-      <height>241</height>
+      <height>251</height>
      </rect>
     </property>
     <property name="styleSheet">
@@ -269,10 +284,10 @@ QScrollBar::up-arrow:vertical, QScrollBar::down-arrow:vertical {
    <widget class="QScrollBar" name="verticalScrollBar_2">
     <property name="geometry">
      <rect>
-      <x>750</x>
+      <x>770</x>
       <y>140</y>
       <width>20</width>
-      <height>441</height>
+      <height>451</height>
      </rect>
     </property>
     <property name="styleSheet">
@@ -304,8 +319,8 @@ QScrollBar::up-arrow:vertical, QScrollBar::down-arrow:vertical {
      <rect>
       <x>0</x>
       <y>0</y>
-      <width>781</width>
-      <height>601</height>
+      <width>801</width>
+      <height>611</height>
      </rect>
     </property>
     <property name="styleSheet">
@@ -327,7 +342,7 @@ QScrollBar::up-arrow:vertical, QScrollBar::down-arrow:vertical {
    <widget class="QPushButton" name="listButton">
     <property name="geometry">
      <rect>
-      <x>500</x>
+      <x>510</x>
       <y>90</y>
       <width>91</width>
       <height>31</height>
@@ -366,7 +381,7 @@ QScrollBar::up-arrow:vertical, QScrollBar::down-arrow:vertical {
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>781</width>
+     <width>800</width>
      <height>21</height>
     </rect>
    </property>

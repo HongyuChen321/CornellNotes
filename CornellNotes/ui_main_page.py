@@ -9,14 +9,14 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-from PyQt5.QtCore import QStringListModel
-from PyQt5.QtWidgets import  QListView
+
 
 class Ui_MainPage(object):
     def setupUi(self, MainPage):
         MainPage.setObjectName("MainPage")
-        MainPage.resize(781, 649)
-        MainPage.setMinimumSize(QtCore.QSize(10, 10))
+        MainPage.resize(800, 650)
+        MainPage.setMinimumSize(QtCore.QSize(800, 650))
+        MainPage.setMaximumSize(QtCore.QSize(800, 650))
         MainPage.setSizeIncrement(QtCore.QSize(0, 0))
         font = QtGui.QFont()
         font.setFamily("Arial")
@@ -72,7 +72,7 @@ class Ui_MainPage(object):
 "")
         self.label_3.setObjectName("label_3")
         self.searchBar = QtWidgets.QTextEdit(self.centralwidget)
-        self.searchBar.setGeometry(QtCore.QRect(320, 40, 411, 41))
+        self.searchBar.setGeometry(QtCore.QRect(320, 40, 421, 41))
         font = QtGui.QFont()
         font.setFamily("Arial")
         font.setPointSize(14)
@@ -82,13 +82,10 @@ class Ui_MainPage(object):
 "    border: 1px solid #cccccc;\n"
 "}\n"
 "")
+        self.searchBar.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
         self.searchBar.setObjectName("searchBar")
         self.noteMenu = QtWidgets.QListView(self.centralwidget)
-        self.noteMenu.setGeometry(QtCore.QRect(320, 130, 451, 461))
-
-        self.model = QStringListModel()
-        self.noteMenu.setModel(self.model)
-
+        self.noteMenu.setGeometry(QtCore.QRect(320, 130, 471, 471))
         font = QtGui.QFont()
         font.setFamily("宋体")
         font.setPointSize(12)
@@ -98,9 +95,11 @@ class Ui_MainPage(object):
 "    border: 1px solid #cccccc;\n"
 "}\n"
 "")
+        self.noteMenu.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
+        self.noteMenu.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
         self.noteMenu.setObjectName("noteMenu")
         self.toDo = QtWidgets.QTextEdit(self.centralwidget)
-        self.toDo.setGeometry(QtCore.QRect(10, 330, 291, 261))
+        self.toDo.setGeometry(QtCore.QRect(10, 330, 291, 271))
         font = QtGui.QFont()
         font.setFamily("宋体")
         font.setPointSize(12)
@@ -114,7 +113,7 @@ class Ui_MainPage(object):
         self.toDo.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
         self.toDo.setObjectName("toDo")
         self.searchButton = QtWidgets.QPushButton(self.centralwidget)
-        self.searchButton.setGeometry(QtCore.QRect(730, 40, 41, 41))
+        self.searchButton.setGeometry(QtCore.QRect(750, 40, 41, 41))
         self.searchButton.setStyleSheet("QPushButton {\n"
 "    background-color: rgba(255, 255, 255, 128);\n"
 "    border: 1px solid #cccccc;\n"
@@ -126,7 +125,7 @@ class Ui_MainPage(object):
         self.searchButton.setIcon(icon)
         self.searchButton.setObjectName("searchButton")
         self.verticalScrollBar = QtWidgets.QScrollBar(self.centralwidget)
-        self.verticalScrollBar.setGeometry(QtCore.QRect(276, 340, 20, 241))
+        self.verticalScrollBar.setGeometry(QtCore.QRect(276, 340, 20, 251))
         self.verticalScrollBar.setStyleSheet("QScrollBar:vertical {\n"
 "    background: rgba(0, 0, 0, 50);  /* 半透明背景 */\n"
 "    width: 10px;  /* 滚动条宽度 */\n"
@@ -148,7 +147,7 @@ class Ui_MainPage(object):
         self.verticalScrollBar.setOrientation(QtCore.Qt.Vertical)
         self.verticalScrollBar.setObjectName("verticalScrollBar")
         self.verticalScrollBar_2 = QtWidgets.QScrollBar(self.centralwidget)
-        self.verticalScrollBar_2.setGeometry(QtCore.QRect(750, 140, 20, 441))
+        self.verticalScrollBar_2.setGeometry(QtCore.QRect(770, 140, 20, 451))
         self.verticalScrollBar_2.setStyleSheet("QScrollBar:vertical {\n"
 "    background: rgba(0, 0, 0, 50);  /* 半透明背景 */\n"
 "    width: 10px;  /* 滚动条宽度 */\n"
@@ -170,7 +169,7 @@ class Ui_MainPage(object):
         self.verticalScrollBar_2.setOrientation(QtCore.Qt.Vertical)
         self.verticalScrollBar_2.setObjectName("verticalScrollBar_2")
         self.label_5 = QtWidgets.QLabel(self.centralwidget)
-        self.label_5.setGeometry(QtCore.QRect(0, 0, 781, 601))
+        self.label_5.setGeometry(QtCore.QRect(0, 0, 801, 611))
         self.label_5.setStyleSheet("")
         self.label_5.setText("")
         self.label_5.setPixmap(QtGui.QPixmap("resources/picture/caca.png"))
@@ -178,7 +177,7 @@ class Ui_MainPage(object):
         self.label_5.setAlignment(QtCore.Qt.AlignCenter)
         self.label_5.setObjectName("label_5")
         self.listButton = QtWidgets.QPushButton(self.centralwidget)
-        self.listButton.setGeometry(QtCore.QRect(500, 90, 91, 31))
+        self.listButton.setGeometry(QtCore.QRect(510, 90, 91, 31))
         self.listButton.setStyleSheet("QPushButton {\n"
 "    border-radius: 15px;               /* 设置圆角 */\n"
 "    background-color: rgba(255, 255, 255, 128); /* 设置半透明背景，黑色50%透明 */\n"
@@ -205,7 +204,7 @@ class Ui_MainPage(object):
         self.statusbar.setObjectName("statusbar")
         MainPage.setStatusBar(self.statusbar)
         self.menuBar = QtWidgets.QMenuBar(MainPage)
-        self.menuBar.setGeometry(QtCore.QRect(0, 0, 781, 21))
+        self.menuBar.setGeometry(QtCore.QRect(0, 0, 800, 21))
         self.menuBar.setObjectName("menuBar")
         self.menuFile = QtWidgets.QMenu(self.menuBar)
         self.menuFile.setObjectName("menuFile")

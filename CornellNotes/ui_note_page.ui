@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>800</width>
-    <height>655</height>
+    <height>650</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -374,6 +374,12 @@ QScrollBar::up-arrow:vertical, QScrollBar::down-arrow:vertical {
 }
 </string>
     </property>
+    <property name="verticalScrollBarPolicy">
+     <enum>Qt::ScrollBarAlwaysOff</enum>
+    </property>
+    <property name="horizontalScrollBarPolicy">
+     <enum>Qt::ScrollBarAlwaysOff</enum>
+    </property>
    </widget>
    <widget class="QTextEdit" name="MainNotes">
     <property name="geometry">
@@ -391,6 +397,12 @@ QScrollBar::up-arrow:vertical, QScrollBar::down-arrow:vertical {
 }
 </string>
     </property>
+    <property name="verticalScrollBarPolicy">
+     <enum>Qt::ScrollBarAlwaysOff</enum>
+    </property>
+    <property name="horizontalScrollBarPolicy">
+     <enum>Qt::ScrollBarAlwaysOff</enum>
+    </property>
    </widget>
    <widget class="QTextEdit" name="conclusion">
     <property name="geometry">
@@ -407,6 +419,12 @@ QScrollBar::up-arrow:vertical, QScrollBar::down-arrow:vertical {
     border: 1px solid #cccccc;
 }
 </string>
+    </property>
+    <property name="verticalScrollBarPolicy">
+     <enum>Qt::ScrollBarAlwaysOff</enum>
+    </property>
+    <property name="horizontalScrollBarPolicy">
+     <enum>Qt::ScrollBarAlwaysOff</enum>
     </property>
    </widget>
    <widget class="QPushButton" name="fontSet">
@@ -481,7 +499,7 @@ QScrollBar::up-arrow:vertical, QScrollBar::down-arrow:vertical {
      <x>0</x>
      <y>0</y>
      <width>800</width>
-     <height>26</height>
+     <height>23</height>
     </rect>
    </property>
    <widget class="QMenu" name="menu">
