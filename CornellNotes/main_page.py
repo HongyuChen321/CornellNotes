@@ -20,6 +20,7 @@ class MainPage(QMainWindow, Ui_MainPage):
         self.auto_list_files()
         self.last_dubble_clicked_path = 'notes'
         self.add_shortcuts()
+        self.setWindowFlags(self.windowFlags() & ~Qt.WindowMaximizeButtonHint)
 
     def add_shortcuts(self):
         # 添加新建笔记快捷键 Ctrl+N

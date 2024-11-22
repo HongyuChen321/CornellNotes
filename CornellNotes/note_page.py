@@ -18,6 +18,7 @@ class NotePage(QMainWindow, Ui_CornellNotes):
         self.last_open_directory = os.getcwd()  # 上次打开的目录
         self.new_folder_path = None  # 新建的文件夹路径，初始为空
         self.current_text_edit = None
+        self.setWindowFlags(self.windowFlags() & ~Qt.WindowMaximizeButtonHint)
         # 快捷键
         self.add_shortcuts()
         # 设置默认字体大小
