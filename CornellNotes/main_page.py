@@ -105,6 +105,7 @@ class MainPage(QMainWindow, Ui_MainPage):
         # 获取双击的文件路径
         file_path = self.model.stringList()[index.row()]
         full_file_path = os.path.join(self.last_dubble_clicked_path, file_path)
+        self.last_dubble_clicked_path = full_file_path
         print(f"Double clicked: {full_file_path}")
 
         if os.path.isdir(full_file_path):
@@ -153,6 +154,7 @@ class MainPage(QMainWindow, Ui_MainPage):
     def list_files(self):
         #         # 打开目录选择对话框
         directory = 'notes'
+        self.last_dubble_clicked_path = directory
 
         if directory:
             # 清除旧的文件列表
@@ -279,6 +281,8 @@ class MainPage(QMainWindow, Ui_MainPage):
 
         if self.note_page.isHidden():
             self.note_page.show()
+            self.note_page.raise_()
+            self.note_page.activateWindow()
             if filename:
                 try:
                     with open(full_file_path, 'r', encoding="UTF-8") as file:
@@ -321,6 +325,8 @@ class MainPage(QMainWindow, Ui_MainPage):
                         self.note_page.current_filename = full_file_path  # 存储完整路径
                         self.note_page.last_open_directory = os.path.dirname(full_file_path)  # 更新上次打开的目录
                         self.note_page.show()  # 显示笔记页面
+                        self.note_page.raise_()
+                        self.note_page.activateWindow()
                 except FileNotFoundError:
                     QMessageBox.critical(self, "Error", f"File not found: {full_file_path}")
                 except UnicodeDecodeError:
