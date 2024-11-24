@@ -234,9 +234,9 @@ class NotePage(QMainWindow, Ui_CornellNotes):
                     weight = QFont.Bold if char_format.fontWeight() != QFont.Bold else QFont.Normal
                     char_format.setFontWeight(weight)
                     cursor.mergeCharFormat(char_format)
-                    cursor.clearSelection()
 
-                cursor.setPosition(start, QTextCursor.MoveAnchor)
+                cursor.setPosition(start, QTextCursor.KeepAnchor)
+                cursor.setPosition(end, QTextCursor.KeepAnchor)
                 self.current_text_edit.setTextCursor(cursor)
 
     # 斜体
@@ -253,9 +253,9 @@ class NotePage(QMainWindow, Ui_CornellNotes):
                     char_format = cursor.charFormat()
                     char_format.setFontItalic(not char_format.fontItalic())
                     cursor.mergeCharFormat(char_format)
-                    cursor.clearSelection()
 
-                cursor.setPosition(start, QTextCursor.MoveAnchor)
+                cursor.setPosition(start, QTextCursor.KeepAnchor)
+                cursor.setPosition(end, QTextCursor.KeepAnchor)
                 self.current_text_edit.setTextCursor(cursor)
 
     # 下划线
@@ -272,9 +272,9 @@ class NotePage(QMainWindow, Ui_CornellNotes):
                     char_format = cursor.charFormat()
                     char_format.setFontUnderline(not char_format.fontUnderline())
                     cursor.mergeCharFormat(char_format)
-                    cursor.clearSelection()
 
                 cursor.setPosition(start, QTextCursor.MoveAnchor)
+                cursor.setPosition(end, QTextCursor.KeepAnchor)
                 self.current_text_edit.setTextCursor(cursor)
 
     # 字体颜色
@@ -293,9 +293,9 @@ class NotePage(QMainWindow, Ui_CornellNotes):
                         char_format = cursor.charFormat()
                         char_format.setForeground(colour)
                         cursor.mergeCharFormat(char_format)
-                        cursor.clearSelection()
 
                     cursor.setPosition(start, QTextCursor.MoveAnchor)
+                    cursor.setPosition(end, QTextCursor.KeepAnchor)
                     self.current_text_edit.setTextCursor(cursor)
 
     # 左对齐
