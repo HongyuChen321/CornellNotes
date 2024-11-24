@@ -20,9 +20,9 @@ class Ui_CornellNotes(object):
         CornellNotes.setStyleSheet("")
         self.centralwidget = QtWidgets.QWidget(CornellNotes)
         self.centralwidget.setObjectName("centralwidget")
-        self.verticalScrollBar = QtWidgets.QScrollBar(self.centralwidget)
-        self.verticalScrollBar.setGeometry(QtCore.QRect(770, 50, 20, 391))
-        self.verticalScrollBar.setStyleSheet("QScrollBar {\n"
+        self.verticalScrollBarMainNotes = QtWidgets.QScrollBar(self.centralwidget)
+        self.verticalScrollBarMainNotes.setGeometry(QtCore.QRect(770, 50, 20, 391))
+        self.verticalScrollBarMainNotes.setStyleSheet("QScrollBar {\n"
 "    background: transparent; /* 滚动条的整体背景透明 */\n"
 "    border: none;  /* 去除滚动条的边框 */\n"
 "}\n"
@@ -46,11 +46,11 @@ class Ui_CornellNotes(object):
 "    background: transparent;  /* 上下箭头区域透明 */\n"
 "}\n"
 "")
-        self.verticalScrollBar.setOrientation(QtCore.Qt.Vertical)
-        self.verticalScrollBar.setObjectName("verticalScrollBar")
-        self.verticalScrollBar_2 = QtWidgets.QScrollBar(self.centralwidget)
-        self.verticalScrollBar_2.setGeometry(QtCore.QRect(140, 50, 20, 391))
-        self.verticalScrollBar_2.setStyleSheet("QScrollBar {\n"
+        self.verticalScrollBarMainNotes.setOrientation(QtCore.Qt.Vertical)
+        self.verticalScrollBarMainNotes.setObjectName("verticalScrollBarMainNotes")
+        self.verticalScrollBarKeywords = QtWidgets.QScrollBar(self.centralwidget)
+        self.verticalScrollBarKeywords.setGeometry(QtCore.QRect(140, 50, 20, 391))
+        self.verticalScrollBarKeywords.setStyleSheet("QScrollBar {\n"
 "    background: transparent; /* 滚动条的整体背景透明 */\n"
 "    border: none;  /* 去除滚动条的边框 */\n"
 "}\n"
@@ -74,11 +74,11 @@ class Ui_CornellNotes(object):
 "    background: transparent;  /* 上下箭头区域透明 */\n"
 "}\n"
 "")
-        self.verticalScrollBar_2.setOrientation(QtCore.Qt.Vertical)
-        self.verticalScrollBar_2.setObjectName("verticalScrollBar_2")
-        self.verticalScrollBar_3 = QtWidgets.QScrollBar(self.centralwidget)
-        self.verticalScrollBar_3.setGeometry(QtCore.QRect(770, 470, 20, 121))
-        self.verticalScrollBar_3.setStyleSheet("QScrollBar {\n"
+        self.verticalScrollBarKeywords.setOrientation(QtCore.Qt.Vertical)
+        self.verticalScrollBarKeywords.setObjectName("verticalScrollBarKeywords")
+        self.verticalScrollBarConclusion = QtWidgets.QScrollBar(self.centralwidget)
+        self.verticalScrollBarConclusion.setGeometry(QtCore.QRect(770, 470, 20, 121))
+        self.verticalScrollBarConclusion.setStyleSheet("QScrollBar {\n"
 "    background: transparent; /* 滚动条的整体背景透明 */\n"
 "    border: none;  /* 去除滚动条的边框 */\n"
 "}\n"
@@ -102,8 +102,8 @@ class Ui_CornellNotes(object):
 "    background: transparent;  /* 上下箭头区域透明 */\n"
 "}\n"
 "")
-        self.verticalScrollBar_3.setOrientation(QtCore.Qt.Vertical)
-        self.verticalScrollBar_3.setObjectName("verticalScrollBar_3")
+        self.verticalScrollBarConclusion.setOrientation(QtCore.Qt.Vertical)
+        self.verticalScrollBarConclusion.setObjectName("verticalScrollBarConclusion")
         self.Bold = QtWidgets.QPushButton(self.centralwidget)
         self.Bold.setGeometry(QtCore.QRect(50, 0, 31, 31))
         self.Bold.setStyleSheet("")
@@ -252,9 +252,9 @@ class Ui_CornellNotes(object):
         self.conclusion.raise_()
         self.MainNotes.raise_()
         self.keyWords.raise_()
-        self.verticalScrollBar.raise_()
-        self.verticalScrollBar_2.raise_()
-        self.verticalScrollBar_3.raise_()
+        self.verticalScrollBarMainNotes.raise_()
+        self.verticalScrollBarKeywords.raise_()
+        self.verticalScrollBarConclusion.raise_()
         self.Bold.raise_()
         self.Italic.raise_()
         self.Underline.raise_()

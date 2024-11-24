@@ -246,7 +246,7 @@
       <normaloff>icon/搜索.svg</normaloff>icon/搜索.svg</iconset>
     </property>
    </widget>
-   <widget class="QScrollBar" name="verticalScrollBar">
+   <widget class="QScrollBar" name="verticalScrollBarToDo">
     <property name="geometry">
      <rect>
       <x>276</x>
@@ -285,7 +285,7 @@ QScrollBar::add-line, QScrollBar::sub-line {
      <enum>Qt::Vertical</enum>
     </property>
    </widget>
-   <widget class="QScrollBar" name="verticalScrollBar_2">
+   <widget class="QScrollBar" name="verticalScrollBarNoteMenu">
     <property name="geometry">
      <rect>
       <x>770</x>
@@ -381,8 +381,8 @@ QScrollBar::add-line, QScrollBar::sub-line {
    <zorder>noteMenu</zorder>
    <zorder>toDo</zorder>
    <zorder>searchButton</zorder>
-   <zorder>verticalScrollBar</zorder>
-   <zorder>verticalScrollBar_2</zorder>
+   <zorder>verticalScrollBarToDo</zorder>
+   <zorder>verticalScrollBarNoteMenu</zorder>
    <zorder>listButton</zorder>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>

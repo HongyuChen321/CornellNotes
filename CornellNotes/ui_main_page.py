@@ -120,9 +120,9 @@ class Ui_MainPage(object):
         icon.addPixmap(QtGui.QPixmap("icon/搜索.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.searchButton.setIcon(icon)
         self.searchButton.setObjectName("searchButton")
-        self.verticalScrollBar = QtWidgets.QScrollBar(self.centralwidget)
-        self.verticalScrollBar.setGeometry(QtCore.QRect(276, 340, 20, 251))
-        self.verticalScrollBar.setStyleSheet("QScrollBar {\n"
+        self.verticalScrollBarToDo = QtWidgets.QScrollBar(self.centralwidget)
+        self.verticalScrollBarToDo.setGeometry(QtCore.QRect(276, 340, 20, 251))
+        self.verticalScrollBarToDo.setStyleSheet("QScrollBar {\n"
 "    background: transparent; /* 滚动条的整体背景透明 */\n"
 "    border: none;  /* 去除滚动条的边框 */\n"
 "}\n"
@@ -146,11 +146,11 @@ class Ui_MainPage(object):
 "    background: transparent;  /* 上下箭头区域透明 */\n"
 "}\n"
 "")
-        self.verticalScrollBar.setOrientation(QtCore.Qt.Vertical)
-        self.verticalScrollBar.setObjectName("verticalScrollBar")
-        self.verticalScrollBar_2 = QtWidgets.QScrollBar(self.centralwidget)
-        self.verticalScrollBar_2.setGeometry(QtCore.QRect(770, 140, 20, 451))
-        self.verticalScrollBar_2.setStyleSheet("QScrollBar {\n"
+        self.verticalScrollBarToDo.setOrientation(QtCore.Qt.Vertical)
+        self.verticalScrollBarToDo.setObjectName("verticalScrollBarToDo")
+        self.verticalScrollBarNoteMenu = QtWidgets.QScrollBar(self.centralwidget)
+        self.verticalScrollBarNoteMenu.setGeometry(QtCore.QRect(770, 140, 20, 451))
+        self.verticalScrollBarNoteMenu.setStyleSheet("QScrollBar {\n"
 "    background: transparent; /* 滚动条的整体背景透明 */\n"
 "    border: none;  /* 去除滚动条的边框 */\n"
 "}\n"
@@ -174,8 +174,8 @@ class Ui_MainPage(object):
 "    background: transparent;  /* 上下箭头区域透明 */\n"
 "}\n"
 "")
-        self.verticalScrollBar_2.setOrientation(QtCore.Qt.Vertical)
-        self.verticalScrollBar_2.setObjectName("verticalScrollBar_2")
+        self.verticalScrollBarNoteMenu.setOrientation(QtCore.Qt.Vertical)
+        self.verticalScrollBarNoteMenu.setObjectName("verticalScrollBarNoteMenu")
         self.label_5 = QtWidgets.QLabel(self.centralwidget)
         self.label_5.setGeometry(QtCore.QRect(0, 0, 801, 611))
         self.label_5.setStyleSheet("")
@@ -204,8 +204,8 @@ class Ui_MainPage(object):
         self.noteMenu.raise_()
         self.toDo.raise_()
         self.searchButton.raise_()
-        self.verticalScrollBar.raise_()
-        self.verticalScrollBar_2.raise_()
+        self.verticalScrollBarToDo.raise_()
+        self.verticalScrollBarNoteMenu.raise_()
         self.listButton.raise_()
         MainPage.setCentralWidget(self.centralwidget)
         self.statusbar = QtWidgets.QStatusBar(MainPage)

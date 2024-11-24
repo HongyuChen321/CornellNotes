@@ -30,6 +30,18 @@ class MainPage(QMainWindow, Ui_MainPage):
                 return True  # 阻止默认行为
         return super().eventFilter(obj, event)
 
+    def connect(self):
+        # File Menu初始化
+        self.actionNewProgram_2.triggered.connect(self.new_program)
+        self.actionNewNote_2.triggered.connect(self.new_note)
+        self.actionOpen_2.triggered.connect(self.open)
+        self.actionSave_2.triggered.connect(self.save)
+        self.actionSaveAs_2.triggered.connect(self.save_as)
+        # 功能初始化
+        self.searchButton.clicked.connect(self.search)
+        self.listButton.clicked.connect(self.list_files)
+        self.noteMenu.doubleClicked.connect(self.on_noteMenu_double_clicked)
+
     def handle_enter_key(self):
         keyword = self.searchBar.toPlainText().strip()
         if not keyword:
@@ -62,18 +74,6 @@ class MainPage(QMainWindow, Ui_MainPage):
         # 添加新建笔记快捷键 Ctrl+N
         new_note_shortcut = QShortcut(QKeySequence("Ctrl+N"), self)
         new_note_shortcut.activated.connect(self.new_note)
-
-    def connect(self):
-        # File Menu初始化
-        self.actionNewProgram_2.triggered.connect(self.new_program)
-        self.actionNewNote_2.triggered.connect(self.new_note)
-        self.actionOpen_2.triggered.connect(self.open)
-        self.actionSave_2.triggered.connect(self.save)
-        self.actionSaveAs_2.triggered.connect(self.save_as)
-        # 功能初始化
-        self.searchButton.clicked.connect(self.search)
-        self.listButton.clicked.connect(self.list_files)
-        self.noteMenu.doubleClicked.connect(self.on_noteMenu_double_clicked)
 
     def auto_list_files(self):
         # 指定要自动列出文件的目录

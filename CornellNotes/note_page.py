@@ -23,20 +23,18 @@ class NotePage(QMainWindow, Ui_CornellNotes):
         self.add_shortcuts()
         # 设置默认字体大小
         self.set_default_font_size(11)
+        self.buttonDisplay()
 
         # 连接聚焦事件
         self.MainNotes.installEventFilter(self)
         self.keyWords.installEventFilter(self)
         self.conclusion.installEventFilter(self)
 
-    def add_shortcuts(self):
-        # 添加保存快捷键 Ctrl+S
-        save_shortcut = QShortcut(QKeySequence("Ctrl+S"), self)
-        save_shortcut.activated.connect(self.save)
-
-        # 添加新建笔记快捷键 Ctrl+N
-        new_note_shortcut = QShortcut(QKeySequence("Ctrl+N"), self)
-        new_note_shortcut.activated.connect(self.new_note)
+    def eventFilter(self, obj, event):
+        if event.type() == QEvent.FocusIn:
+            if obj in [self.MainNotes, self.keyWords, self.conclusion]:
+                self.current_text_edit = obj
+        return super().eventFilter(obj, event)
 
     def connect(self):
         # File Menu初始化
@@ -59,6 +57,40 @@ class NotePage(QMainWindow, Ui_CornellNotes):
         self.InsertPicture.clicked.connect(self.insert_picture)
         self.FontColour.clicked.connect(self.font_colour)
 
+    def buttonDisplay(self):
+        self.fontSet.setToolTip("字体设置")
+        self.Bold.setToolTip("加粗")
+        self.Italic.setToolTip("斜体")
+        self.Underline.setToolTip("下划线")
+        self.Left.setToolTip("左对齐")
+        self.Right.setToolTip("右对齐")
+        self.Center.setToolTip("居中")
+        self.LeftAndRight.setToolTip("两端对齐")
+        self.Superscript.setToolTip("上标")
+        self.Subscript.setToolTip("下标")
+        self.InsertPicture.setToolTip("插入图片")
+        self.FontColour.setToolTip("字体颜色")
+
+    def add_shortcuts(self):
+        # 添加保存快捷键 Ctrl+S
+        save_shortcut = QShortcut(QKeySequence("Ctrl+S"), self)
+        save_shortcut.activated.connect(self.save)
+
+        # 添加新建笔记快捷键 Ctrl+N
+        new_note_shortcut = QShortcut(QKeySequence("Ctrl+N"), self)
+        new_note_shortcut.activated.connect(self.new_note)
+
+        # 加粗快捷键 Ctrl+B
+        bold_shortcut = QShortcut(QKeySequence("Ctrl+B"), self)
+        bold_shortcut.activated.connect(self.bold)
+
+        # 斜体快捷键 Ctrl+I
+        italic_shortcut = QShortcut(QKeySequence("Ctrl+I"), self)
+        italic_shortcut.activated.connect(self.italic)
+
+        # 下划线快捷键 Ctrl+U
+        underline_shortcut = QShortcut(QKeySequence("Ctrl+U"), self)
+        underline_shortcut.activated.connect(self.underline)
 
     def set_default_font_size(self, size):
         font = self.MainNotes.font()
@@ -145,7 +177,6 @@ class NotePage(QMainWindow, Ui_CornellNotes):
                 except Exception as e:
                     QMessageBox.critical(self, "Error", f"Failed to open file: {e}")
 
-
     def save(self):
         if self.current_filename:  # 如果已经打开了文件，则直接保存
             with open(self.current_filename, 'w', encoding = "UTF-8") as file:
@@ -169,12 +200,6 @@ class NotePage(QMainWindow, Ui_CornellNotes):
             self.saved = True
             self.current_filename = filename
             self.last_open_directory = os.path.dirname(filename)  # 更新上次打开的目录
-
-    def eventFilter(self, obj, event):
-        if event.type() == QEvent.FocusIn:
-            if obj in [self.MainNotes, self.keyWords, self.conclusion]:
-                self.current_text_edit = obj
-        return super().eventFilter(obj, event)
 
     def bold(self):
         if self.current_text_edit:
@@ -327,6 +352,7 @@ class NotePage(QMainWindow, Ui_CornellNotes):
                         if self.current_text_edit:  # Ensure there is a current text edit
                             cursor = self.current_text_edit.textCursor()
                             cursor.insertHtml(html_img_tag)
+
     def apply_text_format(self, format):
         # 应用文本格式
         cursor = self.MainNotes.textCursor()
