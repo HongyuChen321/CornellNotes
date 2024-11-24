@@ -1,10 +1,9 @@
 from ui_main_page import Ui_MainPage
-from PyQt5.QtWidgets import QMainWindow, QApplication, QFileDialog, QMessageBox, QInputDialog, QDialog, QTextBrowser, QVBoxLayout, QShortcut
-from PyQt5.QtGui import QKeySequence
-import sys
-import os
 from note_page import NotePage
+from PyQt5.QtWidgets import QMainWindow, QApplication, QFileDialog, QMessageBox, QInputDialog, QDialog, QTextBrowser, QVBoxLayout, QShortcut
+from PyQt5.QtGui import QKeySequence, QKeyEvent
 from PyQt5.QtCore import QDir, Qt, QStringListModel
+import sys, os
 from urllib.parse import unquote
 
 
@@ -15,12 +14,49 @@ class MainPage(QMainWindow, Ui_MainPage):
         self.connect()
         self.model = QStringListModel()
         self.noteMenu.setModel(self.model)
-        self.load_memo_content()
         self.note_page = NotePage()
         self.auto_list_files()
         self.last_dubble_clicked_path = 'notes'
         self.add_shortcuts()
         self.setWindowFlags(self.windowFlags() & ~Qt.WindowMaximizeButtonHint)
+        self.load_memo_content()
+        self.searchBar.installEventFilter(self)
+
+    def eventFilter(self, obj, event):
+        if obj == self.searchBar and event.type() == QKeyEvent.KeyPress:
+            if event.key() == Qt.Key_Return or event.key() == Qt.Key_Enter:
+                # print("回车键被按下，触发自定义行为")
+                self.handle_enter_key()
+                return True  # 阻止默认行为
+        return super().eventFilter(obj, event)
+
+    def handle_enter_key(self):
+        keyword = self.searchBar.toPlainText().strip()
+        if not keyword:
+            print("No keyword entered.")  # 调试输出
+            return  # 如果没有输入关键词，则返回
+
+        # 指定笔记文件存储路径
+        notes_directory = 'notes'
+        matching_files = []  # 用于存储匹配的文件路径
+
+        for root, dirs, files in os.walk(notes_directory):
+            for filename in files:
+                if filename.endswith(".note"):
+                    file_path = os.path.join(root, filename)
+                    with open(file_path, 'r', encoding='utf-8') as file:
+                        content = file.read()
+                        if keyword in content:
+                            matching_files.append(file_path)
+
+        print(f"Matching files: {matching_files}")  # 显示调试
+
+        # 显示
+        if not matching_files:
+            QMessageBox.information(None, "提示", "没有匹配到相关文件哦。")
+            return
+
+        self.display_results(matching_files)
 
     def add_shortcuts(self):
         # 添加新建笔记快捷键 Ctrl+N
@@ -117,7 +153,6 @@ class MainPage(QMainWindow, Ui_MainPage):
             self.model.setStringList(list(file_list))
             self.last_dubble_clicked_path = directory
 
-
     def load_memo_content(self):
         memo_folder = os.path.join('resources', 'memo')
         memo_content = ''
@@ -138,8 +173,6 @@ class MainPage(QMainWindow, Ui_MainPage):
             file.write(self.toDo.toPlainText())
 
     def closeEvent(self, event):
-        # print("Closing event triggered, saving memo content.")
-        # print("toDo content:", self.toDo.toPlainText())
         self.save_memo_content()
         event.accept()
 
@@ -150,7 +183,8 @@ class MainPage(QMainWindow, Ui_MainPage):
             return  # 如果没有输入关键词，则返回
 
         # 指定笔记文件存储路径
-        notes_directory = QFileDialog.getExistingDirectory(self, "选择检索文件夹")
+        absolute_path = QFileDialog.getExistingDirectory(self, "选择检索文件夹", "notes")
+        notes_directory = os.path.relpath(absolute_path)
         matching_files = []  # 用于存储匹配的文件路径
 
         for root, dirs, files in os.walk(notes_directory):

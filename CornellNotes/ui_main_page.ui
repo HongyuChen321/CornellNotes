@@ -54,12 +54,7 @@
      </font>
     </property>
     <property name="styleSheet">
-     <string notr="true">QCalendarWidget {
-    background-color: rgba(255, 255, 255, 128);
-    border: 1px solid #cccccc;
-}
-
-</string>
+     <string notr="true"/>
     </property>
    </widget>
    <widget class="QLabel" name="label">
@@ -165,6 +160,9 @@
     <property name="verticalScrollBarPolicy">
      <enum>Qt::ScrollBarAlwaysOff</enum>
     </property>
+    <property name="lineWrapMode">
+     <enum>QTextEdit::NoWrap</enum>
+    </property>
    </widget>
    <widget class="QListView" name="noteMenu">
     <property name="geometry">
@@ -258,22 +256,28 @@
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true">QScrollBar:vertical {
-    background: rgba(0, 0, 0, 50);  /* 半透明背景 */
-    width: 10px;  /* 滚动条宽度 */
+     <string notr="true">QScrollBar {
+    background: transparent; /* 滚动条的整体背景透明 */
+    border: none;  /* 去除滚动条的边框 */
 }
 
-QScrollBar::handle:vertical {
-    background: rgba(0, 0, 0, 150);  /* 半透明滑块 */
-    border-radius: 5px;  /* 圆角滑块 */
+QScrollBar::handle {
+    background: rgba(255, 255, 255, 100);  /* 滑块为半透明白色 */
+    border-radius: 5px;  /* 设置滑块圆角 */
+    border: 2px solid transparent;  /* 滑块边框透明 */
 }
 
-QScrollBar::add-line:vertical, QScrollBar::sub-line:vertical {
-    border: none;  /* 隐藏箭头按钮 */
+QScrollBar::handle:hover {
+    background: rgba(255, 255, 255, 150);  /* 鼠标悬停时滑块变为更深的半透明白色 */
+    border: 2px solid rgba(255, 255, 255, 100);  /* 半透明边框 */
 }
 
-QScrollBar::up-arrow:vertical, QScrollBar::down-arrow:vertical {
-    border: none;  /* 隐藏箭头图标 */
+QScrollBar::add-page, QScrollBar::sub-page {
+    background: transparent;  /* 滑轨的上下部分透明 */
+}
+
+QScrollBar::add-line, QScrollBar::sub-line {
+    background: transparent;  /* 上下箭头区域透明 */
 }
 </string>
     </property>
@@ -291,22 +295,28 @@ QScrollBar::up-arrow:vertical, QScrollBar::down-arrow:vertical {
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true">QScrollBar:vertical {
-    background: rgba(0, 0, 0, 50);  /* 半透明背景 */
-    width: 10px;  /* 滚动条宽度 */
+     <string notr="true">QScrollBar {
+    background: transparent; /* 滚动条的整体背景透明 */
+    border: none;  /* 去除滚动条的边框 */
 }
 
-QScrollBar::handle:vertical {
-    background: rgba(0, 0, 0, 150);  /* 半透明滑块 */
-    border-radius: 5px;  /* 圆角滑块 */
+QScrollBar::handle {
+    background: rgba(255, 255, 255, 100);  /* 滑块为半透明白色 */
+    border-radius: 5px;  /* 设置滑块圆角 */
+    border: 2px solid transparent;  /* 滑块边框透明 */
 }
 
-QScrollBar::add-line:vertical, QScrollBar::sub-line:vertical {
-    border: none;  /* 隐藏箭头按钮 */
+QScrollBar::handle:hover {
+    background: rgba(255, 255, 255, 150);  /* 鼠标悬停时滑块变为更深的半透明白色 */
+    border: 2px solid rgba(255, 255, 255, 100);  /* 半透明边框 */
 }
 
-QScrollBar::up-arrow:vertical, QScrollBar::down-arrow:vertical {
-    border: none;  /* 隐藏箭头图标 */
+QScrollBar::add-page, QScrollBar::sub-page {
+    background: transparent;  /* 滑轨的上下部分透明 */
+}
+
+QScrollBar::add-line, QScrollBar::sub-line {
+    background: transparent;  /* 上下箭头区域透明 */
 }
 </string>
     </property>
@@ -330,7 +340,7 @@ QScrollBar::up-arrow:vertical, QScrollBar::down-arrow:vertical {
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap>resources/picture/caca.png</pixmap>
+     <pixmap>resources/picture/b1.jpg</pixmap>
     </property>
     <property name="scaledContents">
      <bool>true</bool>

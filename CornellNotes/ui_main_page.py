@@ -30,12 +30,7 @@ class Ui_MainPage(object):
         font.setFamily("宋体")
         font.setPointSize(8)
         self.calendarWidget.setFont(font)
-        self.calendarWidget.setStyleSheet("QCalendarWidget {\n"
-"    background-color: rgba(255, 255, 255, 128);\n"
-"    border: 1px solid #cccccc;\n"
-"}\n"
-"\n"
-"")
+        self.calendarWidget.setStyleSheet("")
         self.calendarWidget.setObjectName("calendarWidget")
         self.label = QtWidgets.QLabel(self.centralwidget)
         self.label.setGeometry(QtCore.QRect(130, 10, 61, 31))
@@ -83,6 +78,7 @@ class Ui_MainPage(object):
 "}\n"
 "")
         self.searchBar.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
+        self.searchBar.setLineWrapMode(QtWidgets.QTextEdit.NoWrap)
         self.searchBar.setObjectName("searchBar")
         self.noteMenu = QtWidgets.QListView(self.centralwidget)
         self.noteMenu.setGeometry(QtCore.QRect(320, 130, 471, 471))
@@ -126,44 +122,56 @@ class Ui_MainPage(object):
         self.searchButton.setObjectName("searchButton")
         self.verticalScrollBar = QtWidgets.QScrollBar(self.centralwidget)
         self.verticalScrollBar.setGeometry(QtCore.QRect(276, 340, 20, 251))
-        self.verticalScrollBar.setStyleSheet("QScrollBar:vertical {\n"
-"    background: rgba(0, 0, 0, 50);  /* 半透明背景 */\n"
-"    width: 10px;  /* 滚动条宽度 */\n"
+        self.verticalScrollBar.setStyleSheet("QScrollBar {\n"
+"    background: transparent; /* 滚动条的整体背景透明 */\n"
+"    border: none;  /* 去除滚动条的边框 */\n"
 "}\n"
 "\n"
-"QScrollBar::handle:vertical {\n"
-"    background: rgba(0, 0, 0, 150);  /* 半透明滑块 */\n"
-"    border-radius: 5px;  /* 圆角滑块 */\n"
+"QScrollBar::handle {\n"
+"    background: rgba(255, 255, 255, 100);  /* 滑块为半透明白色 */\n"
+"    border-radius: 5px;  /* 设置滑块圆角 */\n"
+"    border: 2px solid transparent;  /* 滑块边框透明 */\n"
 "}\n"
 "\n"
-"QScrollBar::add-line:vertical, QScrollBar::sub-line:vertical {\n"
-"    border: none;  /* 隐藏箭头按钮 */\n"
+"QScrollBar::handle:hover {\n"
+"    background: rgba(255, 255, 255, 150);  /* 鼠标悬停时滑块变为更深的半透明白色 */\n"
+"    border: 2px solid rgba(255, 255, 255, 100);  /* 半透明边框 */\n"
 "}\n"
 "\n"
-"QScrollBar::up-arrow:vertical, QScrollBar::down-arrow:vertical {\n"
-"    border: none;  /* 隐藏箭头图标 */\n"
+"QScrollBar::add-page, QScrollBar::sub-page {\n"
+"    background: transparent;  /* 滑轨的上下部分透明 */\n"
+"}\n"
+"\n"
+"QScrollBar::add-line, QScrollBar::sub-line {\n"
+"    background: transparent;  /* 上下箭头区域透明 */\n"
 "}\n"
 "")
         self.verticalScrollBar.setOrientation(QtCore.Qt.Vertical)
         self.verticalScrollBar.setObjectName("verticalScrollBar")
         self.verticalScrollBar_2 = QtWidgets.QScrollBar(self.centralwidget)
         self.verticalScrollBar_2.setGeometry(QtCore.QRect(770, 140, 20, 451))
-        self.verticalScrollBar_2.setStyleSheet("QScrollBar:vertical {\n"
-"    background: rgba(0, 0, 0, 50);  /* 半透明背景 */\n"
-"    width: 10px;  /* 滚动条宽度 */\n"
+        self.verticalScrollBar_2.setStyleSheet("QScrollBar {\n"
+"    background: transparent; /* 滚动条的整体背景透明 */\n"
+"    border: none;  /* 去除滚动条的边框 */\n"
 "}\n"
 "\n"
-"QScrollBar::handle:vertical {\n"
-"    background: rgba(0, 0, 0, 150);  /* 半透明滑块 */\n"
-"    border-radius: 5px;  /* 圆角滑块 */\n"
+"QScrollBar::handle {\n"
+"    background: rgba(255, 255, 255, 100);  /* 滑块为半透明白色 */\n"
+"    border-radius: 5px;  /* 设置滑块圆角 */\n"
+"    border: 2px solid transparent;  /* 滑块边框透明 */\n"
 "}\n"
 "\n"
-"QScrollBar::add-line:vertical, QScrollBar::sub-line:vertical {\n"
-"    border: none;  /* 隐藏箭头按钮 */\n"
+"QScrollBar::handle:hover {\n"
+"    background: rgba(255, 255, 255, 150);  /* 鼠标悬停时滑块变为更深的半透明白色 */\n"
+"    border: 2px solid rgba(255, 255, 255, 100);  /* 半透明边框 */\n"
 "}\n"
 "\n"
-"QScrollBar::up-arrow:vertical, QScrollBar::down-arrow:vertical {\n"
-"    border: none;  /* 隐藏箭头图标 */\n"
+"QScrollBar::add-page, QScrollBar::sub-page {\n"
+"    background: transparent;  /* 滑轨的上下部分透明 */\n"
+"}\n"
+"\n"
+"QScrollBar::add-line, QScrollBar::sub-line {\n"
+"    background: transparent;  /* 上下箭头区域透明 */\n"
 "}\n"
 "")
         self.verticalScrollBar_2.setOrientation(QtCore.Qt.Vertical)
@@ -172,7 +180,7 @@ class Ui_MainPage(object):
         self.label_5.setGeometry(QtCore.QRect(0, 0, 801, 611))
         self.label_5.setStyleSheet("")
         self.label_5.setText("")
-        self.label_5.setPixmap(QtGui.QPixmap("resources/picture/caca.png"))
+        self.label_5.setPixmap(QtGui.QPixmap("resources/picture/b1.jpg"))
         self.label_5.setScaledContents(True)
         self.label_5.setAlignment(QtCore.Qt.AlignCenter)
         self.label_5.setObjectName("label_5")

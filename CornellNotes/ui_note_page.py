@@ -15,70 +15,91 @@ class Ui_CornellNotes(object):
     def setupUi(self, CornellNotes):
         CornellNotes.setObjectName("CornellNotes")
         CornellNotes.resize(800, 650)
+        CornellNotes.setMinimumSize(QtCore.QSize(800, 650))
+        CornellNotes.setMaximumSize(QtCore.QSize(800, 650))
+        CornellNotes.setStyleSheet("")
         self.centralwidget = QtWidgets.QWidget(CornellNotes)
         self.centralwidget.setObjectName("centralwidget")
         self.verticalScrollBar = QtWidgets.QScrollBar(self.centralwidget)
         self.verticalScrollBar.setGeometry(QtCore.QRect(770, 50, 20, 391))
-        self.verticalScrollBar.setStyleSheet("QScrollBar:vertical {\n"
-"    background: rgba(0, 0, 0, 50);  /* 半透明背景 */\n"
-"    width: 10px;  /* 滚动条宽度 */\n"
+        self.verticalScrollBar.setStyleSheet("QScrollBar {\n"
+"    background: transparent; /* 滚动条的整体背景透明 */\n"
+"    border: none;  /* 去除滚动条的边框 */\n"
 "}\n"
 "\n"
-"QScrollBar::handle:vertical {\n"
-"    background: rgba(0, 0, 0, 150);  /* 半透明滑块 */\n"
-"    border-radius: 5px;  /* 圆角滑块 */\n"
+"QScrollBar::handle {\n"
+"    background: rgba(255, 255, 255, 100);  /* 滑块为半透明白色 */\n"
+"    border-radius: 5px;  /* 设置滑块圆角 */\n"
+"    border: 2px solid transparent;  /* 滑块边框透明 */\n"
 "}\n"
 "\n"
-"QScrollBar::add-line:vertical, QScrollBar::sub-line:vertical {\n"
-"    border: none;  /* 隐藏箭头按钮 */\n"
+"QScrollBar::handle:hover {\n"
+"    background: rgba(255, 255, 255, 150);  /* 鼠标悬停时滑块变为更深的半透明白色 */\n"
+"    border: 2px solid rgba(255, 255, 255, 100);  /* 半透明边框 */\n"
 "}\n"
 "\n"
-"QScrollBar::up-arrow:vertical, QScrollBar::down-arrow:vertical {\n"
-"    border: none;  /* 隐藏箭头图标 */\n"
+"QScrollBar::add-page, QScrollBar::sub-page {\n"
+"    background: transparent;  /* 滑轨的上下部分透明 */\n"
+"}\n"
+"\n"
+"QScrollBar::add-line, QScrollBar::sub-line {\n"
+"    background: transparent;  /* 上下箭头区域透明 */\n"
 "}\n"
 "")
         self.verticalScrollBar.setOrientation(QtCore.Qt.Vertical)
         self.verticalScrollBar.setObjectName("verticalScrollBar")
         self.verticalScrollBar_2 = QtWidgets.QScrollBar(self.centralwidget)
         self.verticalScrollBar_2.setGeometry(QtCore.QRect(140, 50, 20, 391))
-        self.verticalScrollBar_2.setStyleSheet("QScrollBar:vertical {\n"
-"    background: rgba(0, 0, 0, 50);  /* 半透明背景 */\n"
-"    width: 10px;  /* 滚动条宽度 */\n"
+        self.verticalScrollBar_2.setStyleSheet("QScrollBar {\n"
+"    background: transparent; /* 滚动条的整体背景透明 */\n"
+"    border: none;  /* 去除滚动条的边框 */\n"
 "}\n"
 "\n"
-"QScrollBar::handle:vertical {\n"
-"    background: rgba(0, 0, 0, 150);  /* 半透明滑块 */\n"
-"    border-radius: 5px;  /* 圆角滑块 */\n"
+"QScrollBar::handle {\n"
+"    background: rgba(255, 255, 255, 100);  /* 滑块为半透明白色 */\n"
+"    border-radius: 5px;  /* 设置滑块圆角 */\n"
+"    border: 2px solid transparent;  /* 滑块边框透明 */\n"
 "}\n"
 "\n"
-"QScrollBar::add-line:vertical, QScrollBar::sub-line:vertical {\n"
-"    border: none;  /* 隐藏箭头按钮 */\n"
+"QScrollBar::handle:hover {\n"
+"    background: rgba(255, 255, 255, 150);  /* 鼠标悬停时滑块变为更深的半透明白色 */\n"
+"    border: 2px solid rgba(255, 255, 255, 100);  /* 半透明边框 */\n"
 "}\n"
 "\n"
-"QScrollBar::up-arrow:vertical, QScrollBar::down-arrow:vertical {\n"
-"    border: none;  /* 隐藏箭头图标 */\n"
+"QScrollBar::add-page, QScrollBar::sub-page {\n"
+"    background: transparent;  /* 滑轨的上下部分透明 */\n"
+"}\n"
+"\n"
+"QScrollBar::add-line, QScrollBar::sub-line {\n"
+"    background: transparent;  /* 上下箭头区域透明 */\n"
 "}\n"
 "")
         self.verticalScrollBar_2.setOrientation(QtCore.Qt.Vertical)
         self.verticalScrollBar_2.setObjectName("verticalScrollBar_2")
         self.verticalScrollBar_3 = QtWidgets.QScrollBar(self.centralwidget)
         self.verticalScrollBar_3.setGeometry(QtCore.QRect(770, 470, 20, 121))
-        self.verticalScrollBar_3.setStyleSheet("QScrollBar:vertical {\n"
-"    background: rgba(0, 0, 0, 50);  /* 半透明背景 */\n"
-"    width: 10px;  /* 滚动条宽度 */\n"
+        self.verticalScrollBar_3.setStyleSheet("QScrollBar {\n"
+"    background: transparent; /* 滚动条的整体背景透明 */\n"
+"    border: none;  /* 去除滚动条的边框 */\n"
 "}\n"
 "\n"
-"QScrollBar::handle:vertical {\n"
-"    background: rgba(0, 0, 0, 150);  /* 半透明滑块 */\n"
-"    border-radius: 5px;  /* 圆角滑块 */\n"
+"QScrollBar::handle {\n"
+"    background: rgba(255, 255, 255, 100);  /* 滑块为半透明白色 */\n"
+"    border-radius: 5px;  /* 设置滑块圆角 */\n"
+"    border: 2px solid transparent;  /* 滑块边框透明 */\n"
 "}\n"
 "\n"
-"QScrollBar::add-line:vertical, QScrollBar::sub-line:vertical {\n"
-"    border: none;  /* 隐藏箭头按钮 */\n"
+"QScrollBar::handle:hover {\n"
+"    background: rgba(255, 255, 255, 150);  /* 鼠标悬停时滑块变为更深的半透明白色 */\n"
+"    border: 2px solid rgba(255, 255, 255, 100);  /* 半透明边框 */\n"
 "}\n"
 "\n"
-"QScrollBar::up-arrow:vertical, QScrollBar::down-arrow:vertical {\n"
-"    border: none;  /* 隐藏箭头图标 */\n"
+"QScrollBar::add-page, QScrollBar::sub-page {\n"
+"    background: transparent;  /* 滑轨的上下部分透明 */\n"
+"}\n"
+"\n"
+"QScrollBar::add-line, QScrollBar::sub-line {\n"
+"    background: transparent;  /* 上下箭头区域透明 */\n"
 "}\n"
 "")
         self.verticalScrollBar_3.setOrientation(QtCore.Qt.Vertical)
@@ -223,7 +244,7 @@ class Ui_CornellNotes(object):
         self.label = QtWidgets.QLabel(self.centralwidget)
         self.label.setGeometry(QtCore.QRect(0, 0, 801, 611))
         self.label.setText("")
-        self.label.setPixmap(QtGui.QPixmap("resources/picture/caca.png"))
+        self.label.setPixmap(QtGui.QPixmap("resources/picture/b1.jpg"))
         self.label.setScaledContents(True)
         self.label.setAlignment(QtCore.Qt.AlignCenter)
         self.label.setObjectName("label")
