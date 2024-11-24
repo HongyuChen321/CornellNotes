@@ -2,7 +2,7 @@ from ui_main_page import Ui_MainPage
 from note_page import NotePage
 from PyQt5.QtWidgets import QMainWindow, QApplication, QFileDialog, QMessageBox, QInputDialog, QDialog, QTextBrowser, QVBoxLayout, QShortcut
 from PyQt5.QtGui import QKeySequence, QKeyEvent
-from PyQt5.QtCore import QDir, Qt, QStringListModel
+from PyQt5.QtCore import QDir, Qt, QStringListModel, QRect
 import sys, os
 from urllib.parse import unquote
 
@@ -21,6 +21,7 @@ class MainPage(QMainWindow, Ui_MainPage):
         self.setWindowFlags(self.windowFlags() & ~Qt.WindowMaximizeButtonHint)
         self.load_memo_content()
         self.searchBar.installEventFilter(self)
+        self.connect_scrollbar()
 
     def eventFilter(self, obj, event):
         if obj == self.searchBar and event.type() == QKeyEvent.KeyPress:
@@ -70,11 +71,21 @@ class MainPage(QMainWindow, Ui_MainPage):
 
         self.display_results(matching_files)
 
+    # 关联滚动条与文本框
+    def connect_scrollbar(self):
+        self.verticalScrollBarToDo.valueChanged.connect(self.toDo.verticalScrollBar().setValue)
+        self.toDo.verticalScrollBar().valueChanged.connect(self.verticalScrollBarToDo.setValue)
+
+        self.verticalScrollBarNoteMenu.valueChanged.connect(self.noteMenu.verticalScrollBar().setValue)
+        self.noteMenu.verticalScrollBar().valueChanged.connect(self.verticalScrollBarNoteMenu.setValue)
+
+    # 添加快捷键
     def add_shortcuts(self):
         # 添加新建笔记快捷键 Ctrl+N
         new_note_shortcut = QShortcut(QKeySequence("Ctrl+N"), self)
         new_note_shortcut.activated.connect(self.new_note)
 
+    # 自动列出文件
     def auto_list_files(self):
         # 指定要自动列出文件的目录
         directory = 'notes'
@@ -89,6 +100,7 @@ class MainPage(QMainWindow, Ui_MainPage):
             # 将文件列表转换为QStringList，并设置到模型中
             self.model.setStringList(list(file_list))
 
+    # 双击文件夹或文件打开文件夹或文件
     def on_noteMenu_double_clicked(self, index):
         # 获取双击的文件路径
         file_path = self.model.stringList()[index.row()]
@@ -137,6 +149,7 @@ class MainPage(QMainWindow, Ui_MainPage):
             except Exception as e:
                 QMessageBox.critical(self, "Error", f"Unexpected error: {str(e)}")
 
+    # 列出文件
     def list_files(self):
         #         # 打开目录选择对话框
         directory = 'notes'
@@ -153,6 +166,7 @@ class MainPage(QMainWindow, Ui_MainPage):
             self.model.setStringList(list(file_list))
             self.last_dubble_clicked_path = directory
 
+    # 读取备忘录内容
     def load_memo_content(self):
         memo_folder = os.path.join('resources', 'memo')
         memo_content = ''
@@ -164,6 +178,7 @@ class MainPage(QMainWindow, Ui_MainPage):
                         memo_content += file.read() + '\n'
         self.toDo.setPlainText(memo_content)
 
+    # 保存备忘录内容
     def save_memo_content(self):
         memo_folder = os.path.join('resources', 'memo')
         if not os.path.exists(memo_folder):
@@ -172,10 +187,12 @@ class MainPage(QMainWindow, Ui_MainPage):
         with open(memo_file_path, 'w', encoding='UTF-8') as file:
             file.write(self.toDo.toPlainText())
 
+    # 关闭窗口时保存备忘录内容
     def closeEvent(self, event):
         self.save_memo_content()
         event.accept()
 
+    # 搜索
     def search(self):
         keyword = self.searchBar.toPlainText().strip()
         if not keyword:
@@ -205,6 +222,7 @@ class MainPage(QMainWindow, Ui_MainPage):
 
         self.display_results(matching_files)
 
+    # 显示检索结果
     def display_results(self, matching_files):
         dialog = QDialog(self)
         dialog.setWindowTitle("检索结果")
@@ -231,6 +249,7 @@ class MainPage(QMainWindow, Ui_MainPage):
 
         dialog.exec_()
 
+    # 打开文件
     def open_file(self, url, parent_dialog):
         full_file_path = unquote(url.toString()).replace('file://', '')
         full_file_path = full_file_path.replace('\\', '/')
@@ -313,6 +332,7 @@ class MainPage(QMainWindow, Ui_MainPage):
 
             parent_dialog.close()  # 关闭检索结果对话框
 
+    # 创建新的文件夹
     def new_program(self):
         folder_name, ok = QInputDialog.getText(self, "Create New Folder", "Enter folder name:")
         if not ok or not folder_name:
@@ -329,12 +349,14 @@ class MainPage(QMainWindow, Ui_MainPage):
             QMessageBox.critical(self, "Error", f"Failed to create folder '{folder_name}': {e}")
             self.new_folder_path = None  # 如果失败则将文件夹路径置为空
 
+    # 创建新的笔记
     def new_note(self):
         if self.note_page.isHidden():
             self.note_page.show()
         else:
             self.note_page.new_note()
 
+    # 打开笔记
     def open(self):
         if self.note_page.isHidden():
             self.note_page.show()
@@ -342,9 +364,11 @@ class MainPage(QMainWindow, Ui_MainPage):
         else:
             self.note_page.open()
 
+    # 保存笔记
     def save(self):
         pass
 
+    # 另存为
     def save_as(self):
         pass
 

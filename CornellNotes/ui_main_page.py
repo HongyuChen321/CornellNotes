@@ -121,7 +121,7 @@ class Ui_MainPage(object):
         self.searchButton.setIcon(icon)
         self.searchButton.setObjectName("searchButton")
         self.verticalScrollBarToDo = QtWidgets.QScrollBar(self.centralwidget)
-        self.verticalScrollBarToDo.setGeometry(QtCore.QRect(276, 340, 20, 251))
+        self.verticalScrollBarToDo.setGeometry(QtCore.QRect(280, 340, 20, 251))
         self.verticalScrollBarToDo.setStyleSheet("QScrollBar {\n"
 "    background: transparent; /* 滚动条的整体背景透明 */\n"
 "    border: none;  /* 去除滚动条的边框 */\n"

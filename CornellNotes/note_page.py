@@ -19,11 +19,10 @@ class NotePage(QMainWindow, Ui_CornellNotes):
         self.new_folder_path = None  # 新建的文件夹路径，初始为空
         self.current_text_edit = None
         self.setWindowFlags(self.windowFlags() & ~Qt.WindowMaximizeButtonHint)
-        # 快捷键
-        self.add_shortcuts()
-        # 设置默认字体大小
-        self.set_default_font_size(11)
+        self.add_shortcuts()     # 快捷键
+        self.set_default_font_size(11)  # 设置默认字体大小
         self.buttonDisplay()
+        self.connect_scrollbar()  # 关联滚动条和文本框
 
         # 连接聚焦事件
         self.MainNotes.installEventFilter(self)
@@ -57,6 +56,18 @@ class NotePage(QMainWindow, Ui_CornellNotes):
         self.InsertPicture.clicked.connect(self.insert_picture)
         self.FontColour.clicked.connect(self.font_colour)
 
+    # 关联滚动条和文本框
+    def connect_scrollbar(self):
+        self.verticalScrollBarKeywords.valueChanged.connect(self.keyWords.verticalScrollBar().setValue)
+        self.keyWords.verticalScrollBar().valueChanged.connect(self.verticalScrollBarKeywords.setValue)
+
+        self.verticalScrollBarMainNotes.valueChanged.connect(self.MainNotes.verticalScrollBar().setValue)
+        self.MainNotes.verticalScrollBar().valueChanged.connect(self.verticalScrollBarMainNotes.setValue)
+
+        self.verticalScrollBarConclusion.valueChanged.connect(self.conclusion.verticalScrollBar().setValue)
+        self.conclusion.verticalScrollBar().valueChanged.connect(self.verticalScrollBarConclusion.setValue)
+
+    # 按钮显示
     def buttonDisplay(self):
         self.fontSet.setToolTip("字体设置")
         self.Bold.setToolTip("加粗")
@@ -71,6 +82,7 @@ class NotePage(QMainWindow, Ui_CornellNotes):
         self.InsertPicture.setToolTip("插入图片")
         self.FontColour.setToolTip("字体颜色")
 
+    # 添加快捷键
     def add_shortcuts(self):
         # 添加保存快捷键 Ctrl+S
         save_shortcut = QShortcut(QKeySequence("Ctrl+S"), self)
@@ -92,6 +104,7 @@ class NotePage(QMainWindow, Ui_CornellNotes):
         underline_shortcut = QShortcut(QKeySequence("Ctrl+U"), self)
         underline_shortcut.activated.connect(self.underline)
 
+    # 设置默认字体大小
     def set_default_font_size(self, size):
         font = self.MainNotes.font()
         font.setPointSize(size)
@@ -99,6 +112,7 @@ class NotePage(QMainWindow, Ui_CornellNotes):
         self.keyWords.setFont(font)
         self.conclusion.setFont(font)
 
+    # 新建文件夹
     def new_program(self):
         folder_name, ok = QInputDialog.getText(self, "Create New Folder", "Enter folder name:")
         if not ok or not folder_name:
@@ -115,6 +129,7 @@ class NotePage(QMainWindow, Ui_CornellNotes):
             QMessageBox.critical(self, "Error", f"Failed to create folder '{folder_name}': {e}")
             self.new_folder_path = None  # 如果失败则将文件夹路径置为空
 
+    # 新建笔记
     def new_note(self):
         if self.saved == True:
             self.MainNotes.clear()
@@ -134,6 +149,7 @@ class NotePage(QMainWindow, Ui_CornellNotes):
                 self.saved = False
                 self.current_filename = None
 
+    # 打开文件
     def open(self):
         # 如果当前笔记为空，则直接打开文件
         if (self.keyWords.toPlainText() == "" and self.MainNotes.toPlainText() == "" and self.conclusion.toPlainText() == "") or self.saved == True :
@@ -177,6 +193,7 @@ class NotePage(QMainWindow, Ui_CornellNotes):
                 except Exception as e:
                     QMessageBox.critical(self, "Error", f"Failed to open file: {e}")
 
+    # 保存文件
     def save(self):
         if self.current_filename:  # 如果已经打开了文件，则直接保存
             with open(self.current_filename, 'w', encoding = "UTF-8") as file:
@@ -188,6 +205,7 @@ class NotePage(QMainWindow, Ui_CornellNotes):
         else:  # 如果没有打开文件（即新建的笔记），则调用 save_as 方法
             self.save_as()
 
+    # 另存为
     def save_as(self):
         start_dir = 'notes'
         filename, _ = QFileDialog.getSaveFileName(self, "Save File", start_dir, "Note Files (*.note)")
@@ -201,6 +219,7 @@ class NotePage(QMainWindow, Ui_CornellNotes):
             self.current_filename = filename
             self.last_open_directory = os.path.dirname(filename)  # 更新上次打开的目录
 
+    # 加粗
     def bold(self):
         if self.current_text_edit:
             cursor = self.current_text_edit.textCursor()
@@ -219,6 +238,7 @@ class NotePage(QMainWindow, Ui_CornellNotes):
 
                 cursor.setPosition(start, QTextCursor.MoveAnchor)  # Reset cursor position
 
+    # 斜体
     def italic(self):
         if self.current_text_edit:
             cursor = self.current_text_edit.textCursor()
@@ -236,6 +256,7 @@ class NotePage(QMainWindow, Ui_CornellNotes):
 
                 cursor.setPosition(start, QTextCursor.MoveAnchor)  # Reset cursor position
 
+    # 下划线
     def underline(self):
         if self.current_text_edit:
             cursor = self.current_text_edit.textCursor()
@@ -253,6 +274,7 @@ class NotePage(QMainWindow, Ui_CornellNotes):
 
                 cursor.setPosition(start, QTextCursor.MoveAnchor)  # Reset cursor position
 
+    # 字体颜色
     def font_colour(self):
         if self.current_text_edit:
             colour = QColorDialog.getColor(self.current_text_edit.textColor(), self)
@@ -272,6 +294,7 @@ class NotePage(QMainWindow, Ui_CornellNotes):
 
                     cursor.setPosition(start, QTextCursor.MoveAnchor)  # Reset cursor position
 
+    # 左对齐
     def left(self):
         text_edits = [self.keyWords, self.MainNotes, self.conclusion]
         for text_edit in text_edits:
@@ -281,6 +304,7 @@ class NotePage(QMainWindow, Ui_CornellNotes):
                 block_format.setAlignment(Qt.AlignLeft)
                 cursor.setBlockFormat(block_format)
 
+    # 右对齐
     def right(self):
         text_edits = [self.keyWords, self.MainNotes, self.conclusion]
         for text_edit in text_edits:
@@ -290,6 +314,7 @@ class NotePage(QMainWindow, Ui_CornellNotes):
                 block_format.setAlignment(Qt.AlignRight)
                 cursor.setBlockFormat(block_format)
 
+    # 居中
     def center(self):
         text_edits = [self.keyWords, self.MainNotes, self.conclusion]
         for text_edit in text_edits:
@@ -299,6 +324,7 @@ class NotePage(QMainWindow, Ui_CornellNotes):
                 block_format.setAlignment(Qt.AlignCenter)
                 cursor.setBlockFormat(block_format)
 
+    # 两端对齐
     def left_and_right(self):
         text_edits = [self.keyWords, self.MainNotes, self.conclusion]
         for text_edit in text_edits:
@@ -308,6 +334,7 @@ class NotePage(QMainWindow, Ui_CornellNotes):
                 block_format.setAlignment(Qt.AlignJustify)
                 cursor.setBlockFormat(block_format)
 
+    # 上标
     def superscript(self):
         # 切换选中文本的上标状态
         cursor = self.MainNotes.textCursor()
@@ -319,6 +346,7 @@ class NotePage(QMainWindow, Ui_CornellNotes):
             format.setVerticalAlignment(QTextCharFormat.AlignSuperScript)
         self.apply_text_format(format)
 
+    # 下标
     def subscript(self):
         # 切换选中文本的下标状态
         cursor = self.MainNotes.textCursor()
@@ -330,6 +358,7 @@ class NotePage(QMainWindow, Ui_CornellNotes):
             format.setVerticalAlignment(QTextCharFormat.AlignSubScript)
         self.apply_text_format(format)
 
+    # 插入图片
     def insert_picture(self):
         filename, _ = QFileDialog.getOpenFileName(self, "Insert Image", "", "Images (*.png *.xpm *.jpg *.bmp *.gif)")
         if filename:
@@ -361,6 +390,7 @@ class NotePage(QMainWindow, Ui_CornellNotes):
         cursor.mergeCharFormat(format)
         self.MainNotes.mergeCurrentCharFormat(format)
 
+    # 设置字体
     def font_set(self):
         if self.current_text_edit:
             font, ok = QFontDialog.getFont(self.current_text_edit.currentFont(), self.current_text_edit)

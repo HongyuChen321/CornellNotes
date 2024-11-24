@@ -249,7 +249,7 @@
    <widget class="QScrollBar" name="verticalScrollBarToDo">
     <property name="geometry">
      <rect>
-      <x>276</x>
+      <x>280</x>
       <y>340</y>
       <width>20</width>
       <height>251</height>
