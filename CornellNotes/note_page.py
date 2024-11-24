@@ -405,6 +405,33 @@ class NotePage(QMainWindow, Ui_CornellNotes):
                     fmt.setFont(font)
                     cursor.setCharFormat(fmt)
 
+    # 关闭窗口后的动作
+    def closeEvent(self, event):
+        if not self.saved:
+            reply = QMessageBox.question(self, "保存更改", "是否要保存更改？",
+                                         QMessageBox.Yes | QMessageBox.No | QMessageBox.Cancel)
+            if reply == QMessageBox.Yes:
+                self.save()
+                self.clear_all_states()
+                event.accept()
+            elif reply == QMessageBox.No:
+                self.clear_all_states()
+                event.accept()
+            else:
+                event.ignore()
+        else:
+            self.clear_all_states()
+            event.accept()
+
+    def clear_all_states(self):
+        self.keyWords.clear()
+        self.MainNotes.clear()
+        self.conclusion.clear()
+        self.saved = False
+        self.current_text_edit = None
+        self.current_filename = None
+        self.last_open_directory = None
+
 if __name__ == '__main__':
     app = QApplication(sys.argv)
     window = NotePage()

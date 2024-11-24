@@ -178,7 +178,7 @@ class MainPage(QMainWindow, Ui_MainPage):
                 file_path = os.path.join(memo_folder, filename)
                 if os.path.isfile(file_path):
                     with open(file_path, 'r', encoding='UTF-8') as file:
-                        memo_content += file.read() + '\n'
+                        memo_content += file.read()
         self.toDo.setPlainText(memo_content)
 
     # 保存备忘录内容
