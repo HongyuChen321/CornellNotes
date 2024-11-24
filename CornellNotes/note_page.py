@@ -12,16 +12,16 @@ class NotePage(QMainWindow, Ui_CornellNotes):
     def __init__(self):
         super().__init__()
         self.setupUi(self)
-        self.connect()
+        self.connect()  # 连接信号和槽
         self.saved = False  # 初始状态为未保存
         self.current_filename = None  # 初始没有当前文件名
-        self.last_open_directory = os.getcwd()  # 上次打开的目录
         self.new_folder_path = None  # 新建的文件夹路径，初始为空
-        self.current_text_edit = None
-        self.setWindowFlags(self.windowFlags() & ~Qt.WindowMaximizeButtonHint)
+        self.current_text_edit = None   # 当前文本编辑框
+        self.last_open_directory = os.getcwd()  # 上次打开的目录
+        self.setWindowFlags(self.windowFlags() & ~Qt.WindowMaximizeButtonHint)  # 禁止最大化
         self.add_shortcuts()     # 快捷键
         self.set_default_font_size(11)  # 设置默认字体大小
-        self.buttonDisplay()
+        self.buttonDisplay()    # 按钮显示
         self.connect_scrollbar()  # 关联滚动条和文本框
 
         # 连接聚焦事件
@@ -236,7 +236,8 @@ class NotePage(QMainWindow, Ui_CornellNotes):
                     cursor.mergeCharFormat(char_format)
                     cursor.clearSelection()
 
-                cursor.setPosition(start, QTextCursor.MoveAnchor)  # Reset cursor position
+                cursor.setPosition(start, QTextCursor.MoveAnchor)
+                self.current_text_edit.setTextCursor(cursor)
 
     # 斜体
     def italic(self):
@@ -254,7 +255,8 @@ class NotePage(QMainWindow, Ui_CornellNotes):
                     cursor.mergeCharFormat(char_format)
                     cursor.clearSelection()
 
-                cursor.setPosition(start, QTextCursor.MoveAnchor)  # Reset cursor position
+                cursor.setPosition(start, QTextCursor.MoveAnchor)
+                self.current_text_edit.setTextCursor(cursor)
 
     # 下划线
     def underline(self):
@@ -272,7 +274,8 @@ class NotePage(QMainWindow, Ui_CornellNotes):
                     cursor.mergeCharFormat(char_format)
                     cursor.clearSelection()
 
-                cursor.setPosition(start, QTextCursor.MoveAnchor)  # Reset cursor position
+                cursor.setPosition(start, QTextCursor.MoveAnchor)
+                self.current_text_edit.setTextCursor(cursor)
 
     # 字体颜色
     def font_colour(self):
@@ -292,7 +295,8 @@ class NotePage(QMainWindow, Ui_CornellNotes):
                         cursor.mergeCharFormat(char_format)
                         cursor.clearSelection()
 
-                    cursor.setPosition(start, QTextCursor.MoveAnchor)  # Reset cursor position
+                    cursor.setPosition(start, QTextCursor.MoveAnchor)
+                    self.current_text_edit.setTextCursor(cursor)
 
     # 左对齐
     def left(self):

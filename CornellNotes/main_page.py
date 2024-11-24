@@ -2,7 +2,7 @@ from ui_main_page import Ui_MainPage
 from note_page import NotePage
 from PyQt5.QtWidgets import QMainWindow, QApplication, QFileDialog, QMessageBox, QInputDialog, QDialog, QTextBrowser, QVBoxLayout, QShortcut
 from PyQt5.QtGui import QKeySequence, QKeyEvent
-from PyQt5.QtCore import QDir, Qt, QStringListModel, QRect
+from PyQt5.QtCore import QDir, Qt, QStringListModel
 import sys, os
 from urllib.parse import unquote
 
@@ -11,17 +11,17 @@ class MainPage(QMainWindow, Ui_MainPage):
     def __init__(self):
         super().__init__()
         self.setupUi(self)
-        self.connect()
-        self.model = QStringListModel()
-        self.noteMenu.setModel(self.model)
-        self.note_page = NotePage()
-        self.auto_list_files()
-        self.last_dubble_clicked_path = 'notes'
-        self.add_shortcuts()
-        self.setWindowFlags(self.windowFlags() & ~Qt.WindowMaximizeButtonHint)
-        self.load_memo_content()
-        self.searchBar.installEventFilter(self)
-        self.connect_scrollbar()
+        self.connect()  # 连接信号与槽
+        self.model = QStringListModel() # 创建QStringListModel
+        self.noteMenu.setModel(self.model)  # 将model设置到noteMenu
+        self.note_page = NotePage() # 创建NotePage实例
+        self.auto_list_files()  # 自动列出文件
+        self.last_dubble_clicked_path = 'notes' # 存储上次双击的文件夹路径
+        self.add_shortcuts()    # 添加快捷键
+        self.setWindowFlags(self.windowFlags() & ~Qt.WindowMaximizeButtonHint)  # 禁用最大化按钮
+        self.load_memo_content()    # 读取备忘录内容
+        self.searchBar.installEventFilter(self) # 安装事件过滤器
+        self.connect_scrollbar()    # 关联滚动条与文本框
 
     def eventFilter(self, obj, event):
         if obj == self.searchBar and event.type() == QKeyEvent.KeyPress:
